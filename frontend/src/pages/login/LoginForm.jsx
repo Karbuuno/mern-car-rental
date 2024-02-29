@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useMutation, useQueryClient } from "react-query";
 
 import { login } from "../api/api.js";
-import axios from "axios";
+
 import { useUser } from "../context/AuthContext.jsx";
 
 function LoginForm() {

@@ -7,9 +7,10 @@ export const login = async inputs => {
         "content-type": "application/json",
       },
     });
+    console.log(data);
     return data;
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
   }
 };
 
