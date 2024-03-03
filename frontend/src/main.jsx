@@ -9,10 +9,10 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { AuthContextProvider } from "./pages/context/AuthContext.jsx";
+import { AuthContextProvider } from "./components/context/AuthContext.jsx";
 import Home from "./pages/screens/HomePage.jsx";
-import LoginForm from "./pages/login/LoginForm.jsx";
-import Register from "./pages/register/Register.jsx";
+import LoginForm from "./components/login/LoginForm.jsx";
+import Register from "./components/register/Register.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(

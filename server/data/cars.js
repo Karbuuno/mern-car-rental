@@ -1,0 +1,88 @@
+const carData = [
+  {
+    make: "KIA",
+    seats: 5,
+    doors: 5,
+    carType: "SUV",
+    gear: "manual ",
+    fuel: "Hybrid and Plug-in",
+    image: "/images/kia.jpg",
+    description:
+      "The Kia Sportage features an elegantly integrated dual-screen display that that lets you easily switch between the infotainment and the climate settings controls with a simple touch.  ",
+    model: "Sportage",
+    price: 89.99,
+    rating: 4.5,
+  },
+  {
+    make: "KIA",
+    seats: 5,
+    doors: 5,
+    carType: "SUV",
+    gear: "manual ",
+    fuel: "Hybrid and Plug-in",
+    image: "/images/kia.jpg",
+    description:
+      "The Kia Sportage features an elegantly integrated dual-screen display that that lets you easily switch between the infotainment and the climate settings controls with a simple touch.  ",
+    model: "Sportage",
+    price: 89.99,
+    rating: 4.5,
+  },
+  {
+    make: "KIA",
+    seats: 5,
+    doors: 5,
+    carType: "SUV",
+    gear: "manual ",
+    fuel: "Hybrid and Plug-in",
+    image: "/images/kia.jpg",
+    description:
+      "The Kia Sportage features an elegantly integrated dual-screen display that that lets you easily switch between the infotainment and the climate settings controls with a simple touch.  ",
+    model: "Sportage",
+    price: 89.99,
+    rating: 4.5,
+  },
+  {
+    make: "KIA",
+    seats: 5,
+    doors: 5,
+    carType: "SUV",
+    gear: "manual ",
+    fuel: "Hybrid and Plug-in",
+    image: "/images/kia.jpg",
+    description:
+      "The Kia Sportage features an elegantly integrated dual-screen display that that lets you easily switch between the infotainment and the climate settings controls with a simple touch.  ",
+    model: "Sportage",
+    price: 89.99,
+    rating: 4.5,
+  },
+  {
+    make: "KIA",
+    seats: 5,
+    doors: 5,
+    carType: "SUV",
+    gear: "manual ",
+    fuel: "Hybrid and Plug-in",
+    image: "/images/kia.jpg",
+    description:
+      "The Kia Sportage features an elegantly integrated dual-screen display that that lets you easily switch between the infotainment and the climate settings controls with a simple touch.  ",
+    model: "Sportage",
+    price: 89.99,
+    rating: 4.5,
+  },
+  {
+    make: "KIA",
+    seats: 5,
+    doors: 5,
+    carType: "SUV",
+    gear: "manual ",
+    fuel: "Hybrid and Plug-in",
+    image: "/images/kia.jpg",
+    description:
+      "The Kia Sportage features an elegantly integrated dual-screen display that that lets you easily switch between the infotainment and the climate settings controls with a simple touch.  ",
+    model: "Sportage",
+    price: 89.99,
+    rating: 4.5,
+  },
+];
+
+export default carData;
