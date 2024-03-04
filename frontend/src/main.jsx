@@ -13,6 +13,8 @@ import { AuthContextProvider } from "./components/context/AuthContext.jsx";
 import Home from "./pages/screens/HomePage.jsx";
 import LoginForm from "./components/login/LoginForm.jsx";
 import Register from "./components/register/Register.jsx";
+import Cars from "./pages/screens/CarsScreen.jsx";
+import CarScreen from "./pages/screens/CarDetailsScreen.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -20,6 +22,8 @@ const router = createBrowserRouter(
       <Route path='/' element={<Home />} />
       <Route path='/login' element={<LoginForm />} />
       <Route path='/register' element={<Register />} />
+      <Route path='/cars' element={<Cars />} />
+      <Route path='/car/:id' element={<CarScreen />} />
     </Route>
   )
 );
