@@ -1,6 +1,36 @@
 const carData = [
   {
-    make: "KIA",
+    name: "KIA",
+    seats: 5,
+    doors: 5,
+    carType: "SUV",
+    gear: "manual ",
+    fuel: "Hybrid and Plug-in",
+    image: "/images/kia.jpg",
+    description:
+      "The Kia Sportage features an elegantly integrated dual-screen display that that lets you easily switch between the infotainment and the climate settings controls with a simple touch.  ",
+    location: "Bristol",
+    model: "Sportage",
+    price: 89.99,
+    rating: 4.5,
+  },
+  {
+    name: "Toyota",
+    seats: 5,
+    doors: 5,
+    carType: "SUV",
+    gear: "manual ",
+    fuel: "Hybrid and Plug-in",
+    image: "/images/kia.jpg",
+    description:
+      "The Kia Sportage features an elegantly integrated dual-screen display that that lets you easily switch between the infotainment and the climate settings controls with a simple touch.  ",
+    location: "London",
+    model: "Sportage",
+    price: 89.99,
+    rating: 4.5,
+  },
+  {
+    name: "KIA",
     seats: 5,
     doors: 5,
     carType: "SUV",
@@ -10,11 +40,12 @@ const carData = [
     description:
       "The Kia Sportage features an elegantly integrated dual-screen display that that lets you easily switch between the infotainment and the climate settings controls with a simple touch.  ",
     model: "Sportage",
+    location: "London",
     price: 89.99,
     rating: 4.5,
   },
   {
-    make: "KIA",
+    name: "KIA",
     seats: 5,
     doors: 5,
     carType: "SUV",
@@ -23,12 +54,13 @@ const carData = [
     image: "/images/kia.jpg",
     description:
       "The Kia Sportage features an elegantly integrated dual-screen display that that lets you easily switch between the infotainment and the climate settings controls with a simple touch.  ",
+    location: "Birmingham",
     model: "Sportage",
     price: 89.99,
     rating: 4.5,
   },
   {
-    make: "KIA",
+    name: "KIA",
     seats: 5,
     doors: 5,
     carType: "SUV",
@@ -37,12 +69,14 @@ const carData = [
     image: "/images/kia.jpg",
     description:
       "The Kia Sportage features an elegantly integrated dual-screen display that that lets you easily switch between the infotainment and the climate settings controls with a simple touch.  ",
+    location: "Birmingham",
     model: "Sportage",
+
     price: 89.99,
     rating: 4.5,
   },
   {
-    make: "KIA",
+    name: "KIA",
     seats: 5,
     doors: 5,
     carType: "SUV",
@@ -51,34 +85,7 @@ const carData = [
     image: "/images/kia.jpg",
     description:
       "The Kia Sportage features an elegantly integrated dual-screen display that that lets you easily switch between the infotainment and the climate settings controls with a simple touch.  ",
-    model: "Sportage",
-    price: 89.99,
-    rating: 4.5,
-  },
-  {
-    make: "KIA",
-    seats: 5,
-    doors: 5,
-    carType: "SUV",
-    gear: "manual ",
-    fuel: "Hybrid and Plug-in",
-    image: "/images/kia.jpg",
-    description:
-      "The Kia Sportage features an elegantly integrated dual-screen display that that lets you easily switch between the infotainment and the climate settings controls with a simple touch.  ",
-    model: "Sportage",
-    price: 89.99,
-    rating: 4.5,
-  },
-  {
-    make: "KIA",
-    seats: 5,
-    doors: 5,
-    carType: "SUV",
-    gear: "manual ",
-    fuel: "Hybrid and Plug-in",
-    image: "/images/kia.jpg",
-    description:
-      "The Kia Sportage features an elegantly integrated dual-screen display that that lets you easily switch between the infotainment and the climate settings controls with a simple touch.  ",
+    location: "Bristol",
     model: "Sportage",
     price: 89.99,
     rating: 4.5,

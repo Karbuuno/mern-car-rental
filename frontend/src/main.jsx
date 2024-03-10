@@ -15,6 +15,8 @@ import LoginForm from "./components/login/LoginForm.jsx";
 import Register from "./components/register/Register.jsx";
 import Cars from "./pages/screens/CarsScreen.jsx";
 import CarScreen from "./pages/screens/CarDetailsScreen.jsx";
+import Search from "./pages/screens/Search.jsx";
+import Location from "./pages/screens/Location.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -23,7 +25,9 @@ const router = createBrowserRouter(
       <Route path='/login' element={<LoginForm />} />
       <Route path='/register' element={<Register />} />
       <Route path='/cars' element={<Cars />} />
-      <Route path='/car/:id' element={<CarScreen />} />
+      <Route path='/cars/:id' element={<CarScreen />} />
+
+      <Route path='/cars/:location' element={<Location />} />
     </Route>
   )
 );

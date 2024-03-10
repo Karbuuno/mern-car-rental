@@ -36,7 +36,7 @@ function Header() {
 
   return (
     <>
-      <div className='flex justify-between items-center w-full h-20 px-4 text-white bg-black fixed'>
+      <div className='flex justify-between items-center w-full h-20 px-4 text-white bg-black'>
         <div>
           <h1 className='text-5xl  ml-2'>CAR RENTAL</h1>
         </div>
@@ -72,19 +72,21 @@ function Header() {
         </div>
 
         {nav && (
-          <div className='flex flex-col justify-center items-center absolute top-0 left-0 w-full h-screen bg-gradient-to-b from-black to-gray-800 text-gray-500 md:hidden'>
-            <li className='px-4 cursor-pointer capitalize py-6 text-4xl'>
-              <Link>HOME</Link>
-            </li>
-            <li className='px-4 cursor-pointer capitalize py-6 text-4xl'>
-              <Link>CARS</Link>
-            </li>
-            <li className='px-4 cursor-pointer capitalize py-6 text-4xl'>
-              <Link>ABOUT</Link>
-            </li>
-            <li className='px-4 cursor-pointer capitalize py-6 text-4xl'>
-              <Link to='/login'>LOGIN</Link>
-            </li>
+          <div className='flex flex-col justify-center items-center absolute top-0 left-0 w-full h-screen bg-black  md:hidden'>
+            <ul>
+              <li className='px-4 cursor-pointer capitalize py-6 text-4xl text-white'>
+                <Link to='/'>HOME</Link>
+              </li>
+              <li className='px-4 cursor-pointer capitalize py-6 text-4xl text-white'>
+                <Link to='/cars'>CARS</Link>
+              </li>
+              <li className='px-4 cursor-pointer capitalize py-6 text-4xl text-white'>
+                <Link>ABOUT</Link>
+              </li>
+              <li className='px-4 cursor-pointer capitalize py-6 text-4xl text-white '>
+                <Link to='/login'>LOGIN</Link>
+              </li>
+            </ul>
           </div>
         )}
       </div>

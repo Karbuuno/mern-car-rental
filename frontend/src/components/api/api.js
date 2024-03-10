@@ -42,3 +42,8 @@ export const allCarsData = async () => {
   const { data } = await axios.get("/api/cars");
   return data;
 };
+export const SearchCarsData = async location => {
+  const { data } = await axios.get(`/api/cars/${location}`);
+
+  return data;
+};

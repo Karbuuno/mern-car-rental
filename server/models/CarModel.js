@@ -2,12 +2,12 @@ import mongoose from "mongoose";
 
 const carSchema = mongoose.Schema(
   {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "User",
-    },
-    make: {
+    // user: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   required: true,
+    //   ref: "User",
+    // },
+    name: {
       type: String,
       required: true,
     },
@@ -31,6 +31,10 @@ const carSchema = mongoose.Schema(
       required: true,
     },
     description: {
+      type: String,
+      required: true,
+    },
+    location: {
       type: String,
       required: true,
     },
