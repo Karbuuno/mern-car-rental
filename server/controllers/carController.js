@@ -20,7 +20,7 @@ const searchCars = asyncHandler(async (req, res) => {
         },
       }
     : {};
-  console.log(search);
+
   if (search !== "") {
     try {
       const searchedCar = await Cars.find(search);
@@ -32,4 +32,18 @@ const searchCars = asyncHandler(async (req, res) => {
   }
 });
 
-export { getCars, searchCars };
+const getCar = asyncHandler(async (req, res) => {
+  const car = await Cars.findById(req.params.id).select([
+    "-__v",
+    "-createdAt",
+    "-updatedAt",
+  ]);
+  try {
+    res.json({ car });
+  } catch (error) {
+    res.status(404);
+    throw new Error("Product not found");
+  }
+});
+
+export { getCars, getCar, searchCars };

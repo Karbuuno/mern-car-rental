@@ -25,9 +25,9 @@ const router = createBrowserRouter(
       <Route path='/login' element={<LoginForm />} />
       <Route path='/register' element={<Register />} />
       <Route path='/cars' element={<Cars />} />
-      <Route path='/cars/:id' element={<CarScreen />} />
+      <Route path='/car/:id' element={<CarScreen />} />
 
-      <Route path='/cars/:location' element={<Location />} />
+      <Route path='/cars/search/:location' element={<Location />} />
     </Route>
   )
 );

@@ -4,10 +4,10 @@ import { useMutation, useQueryClient } from "react-query";
 
 import { login } from "../api/api.js";
 
-import { useUser } from "../context/AuthContext.jsx";
+import { UseContext } from "../context/AuthContext.jsx";
 
 function LoginForm() {
-  const { user, setUser } = useUser();
+  const { user, setUser } = UseContext();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();

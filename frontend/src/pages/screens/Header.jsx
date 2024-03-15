@@ -1,18 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaRegUser } from "react-icons/fa";
 import { IoLogOutOutline } from "react-icons/io5";
 import { logout } from "@/components/api/api";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { useMutation, useQueryClient } from "react-query";
-import { useUser } from "@/components/context/AuthContext";
+import { UseContext } from "@/components/context/AuthContext";
 
 function Header() {
   const [nav, setNav] = useState(false);
   const QueryClient = useQueryClient();
   const navigate = useNavigate();
-  const { user, setUser } = useUser();
+  const { user, setUser } = UseContext();
+
+  const location = useLocation();
+
   const { mutate, isError, onSuccess } = useMutation({
     mutationFn: logout,
     onSuccess: data => {
@@ -34,9 +37,13 @@ function Header() {
     navigate("/");
   };
 
+  useEffect(() => {
+    setNav(false);
+  }, [location]);
+
   return (
     <>
-      <div className='flex justify-between items-center w-full h-20 px-4 text-white bg-black'>
+      <div className=' flex justify-between items-center w-full h-20 px-4 text-white bg-black'>
         <div>
           <h1 className='text-5xl  ml-2'>CAR RENTAL</h1>
         </div>
@@ -72,7 +79,7 @@ function Header() {
         </div>
 
         {nav && (
-          <div className='flex flex-col justify-center items-center absolute top-0 left-0 w-full h-screen bg-black  md:hidden'>
+          <div className='z-[5] flex flex-col justify-center items-center absolute top-0 left-0 w-full h-screen bg-black  md:hidden'>
             <ul>
               <li className='px-4 cursor-pointer capitalize py-6 text-4xl text-white'>
                 <Link to='/'>HOME</Link>

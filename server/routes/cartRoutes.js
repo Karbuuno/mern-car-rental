@@ -1,8 +1,9 @@
 import express from "express";
 const router = express.Router();
-import { getCars, searchCars } from "../controllers/carController.js";
+import { getCar, getCars, searchCars } from "../controllers/carController.js";
 
 router.route("/").get(getCars);
-router.route("/:location").get(searchCars);
+router.route("/:id").get(getCar);
+router.route("/search/:location").get(searchCars);
 
 export default router;

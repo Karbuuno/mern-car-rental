@@ -8,13 +8,13 @@ import Footer from "./pages/screens/Footer";
 
 function App() {
   return (
-    <>
+    <div className='h-full'>
       <Header />
       <main className=' '>
         <Outlet />
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
 

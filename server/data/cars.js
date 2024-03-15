@@ -6,7 +6,8 @@ const carData = [
     carType: "SUV",
     gear: "manual ",
     fuel: "Hybrid and Plug-in",
-    image: "/images/kia.jpg",
+    image:
+      "https://res.cloudinary.com/dunopxgwq/image/upload/v1710281500/KIA_ox4rrk.jpg",
     description:
       "The Kia Sportage features an elegantly integrated dual-screen display that that lets you easily switch between the infotainment and the climate settings controls with a simple touch.  ",
     location: "Bristol",
@@ -21,7 +22,8 @@ const carData = [
     carType: "SUV",
     gear: "manual ",
     fuel: "Hybrid and Plug-in",
-    image: "/images/kia.jpg",
+    image:
+      "https://res.cloudinary.com/dunopxgwq/image/upload/v1710281500/KIA_ox4rrk.jpg",
     description:
       "The Kia Sportage features an elegantly integrated dual-screen display that that lets you easily switch between the infotainment and the climate settings controls with a simple touch.  ",
     location: "London",
@@ -36,7 +38,8 @@ const carData = [
     carType: "SUV",
     gear: "manual ",
     fuel: "Hybrid and Plug-in",
-    image: "/images/kia.jpg",
+    image:
+      "https://res.cloudinary.com/dunopxgwq/image/upload/v1710281500/KIA_ox4rrk.jpg",
     description:
       "The Kia Sportage features an elegantly integrated dual-screen display that that lets you easily switch between the infotainment and the climate settings controls with a simple touch.  ",
     model: "Sportage",
@@ -51,7 +54,8 @@ const carData = [
     carType: "SUV",
     gear: "manual ",
     fuel: "Hybrid and Plug-in",
-    image: "/images/kia.jpg",
+    image:
+      "https://res.cloudinary.com/dunopxgwq/image/upload/v1710281500/KIA_ox4rrk.jpg",
     description:
       "The Kia Sportage features an elegantly integrated dual-screen display that that lets you easily switch between the infotainment and the climate settings controls with a simple touch.  ",
     location: "Birmingham",
@@ -66,7 +70,8 @@ const carData = [
     carType: "SUV",
     gear: "manual ",
     fuel: "Hybrid and Plug-in",
-    image: "/images/kia.jpg",
+    image:
+      "https://res.cloudinary.com/dunopxgwq/image/upload/v1710281500/KIA_ox4rrk.jpg",
     description:
       "The Kia Sportage features an elegantly integrated dual-screen display that that lets you easily switch between the infotainment and the climate settings controls with a simple touch.  ",
     location: "Birmingham",
@@ -82,7 +87,8 @@ const carData = [
     carType: "SUV",
     gear: "manual ",
     fuel: "Hybrid and Plug-in",
-    image: "/images/kia.jpg",
+    image:
+      "https://res.cloudinary.com/dunopxgwq/image/upload/v1710281500/KIA_ox4rrk.jpg",
     description:
       "The Kia Sportage features an elegantly integrated dual-screen display that that lets you easily switch between the infotainment and the climate settings controls with a simple touch.  ",
     location: "Bristol",

@@ -14,9 +14,9 @@ function HomeScreen() {
   return (
     <>
       <Search />
-      <div className='h-screen w-full mx-auto '>
+      <div className='w-full mx-auto '>
         {/* <div className='flex   h-screen '> */}
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center place-items-center px-24 mt-16 gap-x-8    '>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center place-items-center px-24 mt-16  gap-6   '>
           {isLoading ? (
             <h3>...loading</h3>
           ) : error ? (
@@ -25,7 +25,7 @@ function HomeScreen() {
             <>
               {data.cars.map(car => (
                 <div key={car._id}>
-                  <div className=' flex flex-col rounded group-hover:hidden bg-gray-200 shadow-md mt-6 mx-auto  text-center  '>
+                  <div className=' flex flex-col rounded  bg-gray-50 shadow-md mt-6 w-full   text-center  '>
                     <div className='flex flex-row space-x-6 space-10  mix-blend-multiply'>
                       <div className='flex flex-col'>
                         <div className='mx-10 my-5'>
@@ -83,7 +83,6 @@ function HomeScreen() {
           )}
         </div>
       </div>
-      /
     </>
   );
 }

@@ -38,12 +38,22 @@ export const logout = async inputs => {
     console.log(error.message);
   }
 };
+
+//all cars
 export const allCarsData = async () => {
   const { data } = await axios.get("/api/cars");
   return data;
 };
-export const SearchCarsData = async location => {
-  const { data } = await axios.get(`/api/cars/${location}`);
+//single car
+export const carDetails = async id => {
+  const { data } = await axios.get(`/api/cars/${id}`);
+  return data;
+};
+
+//search car details
+export const SearchCarsData = async (location, from, to) => {
+  const { data } = await axios.get(`/api/cars/search/${location}`);
 
   return data;
 };
+// cars/search/bristol?from=2024-03-14&to=2024-03-17
