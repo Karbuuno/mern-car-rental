@@ -1,9 +1,8 @@
 import React from "react";
 import { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import { useQuery, useMutation, useQueryClient } from "react-query";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useMutation, useQueryClient } from "react-query";
 import { register } from "../api/api.js";
-import axios from "axios";
 
 function Register() {
   const [name, setName] = useState("");
@@ -11,6 +10,10 @@ function Register() {
   const [password, setPassword] = useState("");
   const QueryClient = useQueryClient();
   const navigate = useNavigate();
+  const { search } = useLocation();
+  const sp = new URLSearchParams(search);
+  const redirect = sp.get("redirect") || "/";
+
   const registerMutation = useMutation({
     mutationFn: register,
     onSuccess: data => {
@@ -24,6 +27,7 @@ function Register() {
   // });
   const submitHandler = e => {
     e.preventDefault();
+    navigate(redirect);
     // const formData = new FormData(e.currentTarget);
     // const newUser = Object.fromEntries(formData);
     registerMutation.mutate({ name, email, password });
@@ -65,7 +69,7 @@ function Register() {
           >
             Register
           </button>
-          <Link to={"/login"}>
+          <Link to={redirect ? `/login?redirect=${redirect}` : "/login"}>
             Already registered? <span>Login</span>
           </Link>
         </form>

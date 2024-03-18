@@ -15,21 +15,23 @@ export const AuthContextProvider = ({ children }) => {
       localStorage.removeItem("user");
     }
   }, [user]);
-  const [search, setSearch] = useState(() => {
-    const savedSearch = localStorage.getItem("search");
-    return savedSearch ? JSON.parse(savedSearch) : null;
-  });
 
-  useEffect(() => {
-    if (search) {
-      localStorage.setItem("search", JSON.stringify(search));
-    } else {
-      localStorage.removeItem("search");
-    }
-  }, [search]);
+  // booking context
+  // const [booking, setBooking] = useState(() => {
+  //   const booking = localStorage.getItem("booking");
+  //   return booking ? JSON.parse(booking) : null;
+  // });
+
+  // useEffect(() => {
+  //   if (booking) {
+  //     localStorage.setItem("booking", JSON.stringify(booking));
+  //   } else {
+  //     localStorage.removeItem("booking");
+  //   }
+  // }, [booking]);
 
   return (
-    <GlobalContext.Provider value={{ user, setUser, search, setSearch }}>
+    <GlobalContext.Provider value={{ user, setUser, booking, setBooking }}>
       {children}
     </GlobalContext.Provider>
   );

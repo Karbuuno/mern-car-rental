@@ -56,4 +56,24 @@ export const SearchCarsData = async (location, from, to) => {
 
   return data;
 };
-// cars/search/bristol?from=2024-03-14&to=2024-03-17
+
+// stripe api
+export const checkout = async stripeData => {
+  try {
+    const { data } = await axios.post(
+      "/api/stripe/create-checkout",
+      stripeData,
+      {
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    );
+    if (data) {
+      window.location.href = data.url;
+    }
+    return data;
+  } catch (error) {
+    console.log(error.message);
+  }
+};

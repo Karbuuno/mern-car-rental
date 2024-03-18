@@ -17,6 +17,7 @@ import Cars from "./pages/screens/CarsScreen.jsx";
 import CarScreen from "./pages/screens/CarDetailsScreen.jsx";
 import Search from "./pages/screens/Search.jsx";
 import Location from "./pages/screens/Location.jsx";
+import Checkout_session from "./pages/screens/Checkout_session.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,6 +29,7 @@ const router = createBrowserRouter(
       <Route path='/car/:id' element={<CarScreen />} />
 
       <Route path='/cars/search/:location' element={<Location />} />
+      <Route path='/checkout_session' element={<Checkout_session />} />
     </Route>
   )
 );

@@ -1,32 +1,27 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { GiGearStickPattern } from "react-icons/gi";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 
-import { UseContext } from "@/components/context/AuthContext";
+// import { UseContext } from "@/components/context/AuthContext";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { SearchCarsData } from "@/components/api/api";
 import { dayDifference } from "@/components/api/daysDiff";
-function Location({ searchInput, startDate, endDate }) {
-  //   const { search, setSearch } = UseContext();
-  const QueryClient = useQueryClient();
+
+function Location() {
   const { location } = useParams();
   const navigate = useNavigate();
   const { search } = useLocation();
+
   const searchParams = new URLSearchParams(search);
   const from = searchParams.get("from");
   const to = searchParams.get("to");
 
   const totalDays = dayDifference(from, to);
 
-  console.log(from, to, totalDays);
+  // console.log(from, to, totalDays);
   const { data, error, isLoading } = useQuery({
     queryKey: ["search", location],
     queryFn: () => SearchCarsData(location),
-
-    onSuccess: data => {
-      // QueryClient.invalidateQueries({ queryKey: ["search"] });
-      //   setSearch(data);
-    },
   });
 
   return (
@@ -98,7 +93,9 @@ function Location({ searchInput, startDate, endDate }) {
                     <div className='mx-2 my-2'>
                       <button
                         onClick={() =>
-                          navigate(`/car/${car._id}?from=${from}&to=${to}`)
+                          navigate(
+                            `/login?redirect=/car/${car._id}?totalDays=${totalDays}`
+                          )
                         }
                         className=' group-hover: bg-gradient-to-r from-blue-400 to-blue-600 p-2 rounded text-white  w-full '
                       >

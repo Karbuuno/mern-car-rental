@@ -37,7 +37,7 @@ function LoginForm() {
 
   const submitHandler = async e => {
     e.preventDefault();
-
+    navigate(redirect);
     mutate({ email, password });
   };
 
@@ -69,7 +69,7 @@ function LoginForm() {
           >
             Login
           </button>
-          <Link to={"/register"}>
+          <Link to={redirect ? `/register?redirect=${redirect}` : "/register"}>
             Don't have an account? <span>Register</span>
           </Link>
         </form>

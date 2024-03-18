@@ -1,35 +1,41 @@
 import React from "react";
 import { GiGearStickPattern } from "react-icons/gi";
-import { carDetails } from "@/components/api/api";
+import { carDetails, checkout } from "@/components/api/api";
 
-import { dayDifference } from "@/components/api/daysDiff";
+// import { dayDifference } from "@/components/api/daysDiff";
 
-import { Link, useLocation, useParams } from "react-router-dom";
-import { useMutation, useQueryClient, useQuery } from "react-query";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useQuery } from "react-query";
+import { UseContext } from "@/components/context/AuthContext";
 
 function CarDetailsScreen() {
   const { search } = useLocation();
+  // const navigate = useNavigate();
   const searchParams = new URLSearchParams(search);
   const from = searchParams.get("from");
   const to = searchParams.get("to");
-  const totalDays = dayDifference(from, to);
+  const totalDays = searchParams.get("totalDays");
 
+  // const totalDays = dayDifference(from, to);
+  // const { user, setUser } = UseContext();
   const { id } = useParams();
+
+  console.log(from, to, totalDays);
   const { data, error, isLoading } = useQuery({
     queryKey: ["cars", id],
     queryFn: () => carDetails(id),
   });
 
-  console.log(
-    "data",
-    data,
-    "totalDays",
-    totalDays,
-    "startDate",
-    from,
-    "endDate",
-    to
-  );
+  let stripeData = {
+    totalPrice: Math.floor(data?.car?.price * totalDays),
+    image: data?.car?.image,
+    make: data?.car?.name,
+  };
+
+  const handlePayment = async e => {
+    e.preventDefault();
+    checkout(stripeData);
+  };
 
   return (
     <div>
@@ -54,7 +60,13 @@ function CarDetailsScreen() {
                 <div>
                   <div>Suv</div>
                   <h1 className='font-bold'>Kia Sportage</h1>
-                  <div className=''>$89/day</div>
+                  <div className=''>
+                    {totalDays ? (
+                      <span className='ml-4 font-bold'>
+                        ${Math.floor(data?.car?.price * totalDays)}
+                      </span>
+                    ) : null}
+                  </div>
                 </div>
                 <div>⭐⭐⭐⭐⭐</div>
               </div>
@@ -89,7 +101,7 @@ function CarDetailsScreen() {
           </div>
           <div className='mx-2 my-2'>
             <button
-              onClick={() => navigate(`/car/${data?.car._id}`)}
+              onClick={handlePayment}
               className=' group-hover: bg-gradient-to-r from-blue-400 to-blue-600 p-2 rounded text-white  w-full '
             >
               Book New
