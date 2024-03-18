@@ -31,7 +31,7 @@ export const AuthContextProvider = ({ children }) => {
   // }, [booking]);
 
   return (
-    <GlobalContext.Provider value={{ user, setUser, booking, setBooking }}>
+    <GlobalContext.Provider value={{ user, setUser }}>
       {children}
     </GlobalContext.Provider>
   );
