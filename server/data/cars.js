@@ -6,6 +6,7 @@ const carData = [
     carType: "SUV",
     gear: "manual ",
     fuel: "Hybrid and Plug-in",
+    regNumber: "pp68nmy",
     image:
       "https://res.cloudinary.com/dunopxgwq/image/upload/v1710281500/KIA_ox4rrk.jpg",
     description:
@@ -13,7 +14,7 @@ const carData = [
     location: "Bristol",
     model: "Sportage",
     price: 89.99,
-    rating: 4.5,
+    isAvailable: false,
   },
   {
     name: "Toyota",
@@ -22,6 +23,7 @@ const carData = [
     carType: "SUV",
     gear: "manual ",
     fuel: "Hybrid and Plug-in",
+    regNumber: "dp20nmy",
     image:
       "https://res.cloudinary.com/dunopxgwq/image/upload/v1710281500/KIA_ox4rrk.jpg",
     description:
@@ -29,7 +31,7 @@ const carData = [
     location: "London",
     model: "Sportage",
     price: 89.99,
-    rating: 4.5,
+    isAvailable: false,
   },
   {
     name: "KIA",
@@ -38,6 +40,7 @@ const carData = [
     carType: "SUV",
     gear: "manual ",
     fuel: "Hybrid and Plug-in",
+    regNumber: "dp22nmd",
     image:
       "https://res.cloudinary.com/dunopxgwq/image/upload/v1710281500/KIA_ox4rrk.jpg",
     description:
@@ -45,7 +48,7 @@ const carData = [
     model: "Sportage",
     location: "London",
     price: 89.99,
-    rating: 4.5,
+    isAvailable: false,
   },
   {
     name: "KIA",
@@ -54,6 +57,7 @@ const carData = [
     carType: "SUV",
     gear: "manual ",
     fuel: "Hybrid and Plug-in",
+    regNumber: "dp21nmh",
     image:
       "https://res.cloudinary.com/dunopxgwq/image/upload/v1710281500/KIA_ox4rrk.jpg",
     description:
@@ -61,7 +65,7 @@ const carData = [
     location: "Birmingham",
     model: "Sportage",
     price: 89.99,
-    rating: 4.5,
+    isAvailable: false,
   },
   {
     name: "KIA",
@@ -70,6 +74,7 @@ const carData = [
     carType: "SUV",
     gear: "manual ",
     fuel: "Hybrid and Plug-in",
+    regNumber: "do22nvy",
     image:
       "https://res.cloudinary.com/dunopxgwq/image/upload/v1710281500/KIA_ox4rrk.jpg",
     description:
@@ -78,7 +83,7 @@ const carData = [
     model: "Sportage",
 
     price: 89.99,
-    rating: 4.5,
+    isAvailable: false,
   },
   {
     name: "KIA",
@@ -87,6 +92,7 @@ const carData = [
     carType: "SUV",
     gear: "manual ",
     fuel: "Hybrid and Plug-in",
+    regNumber: "du23nvy",
     image:
       "https://res.cloudinary.com/dunopxgwq/image/upload/v1710281500/KIA_ox4rrk.jpg",
     description:
@@ -94,7 +100,7 @@ const carData = [
     location: "Bristol",
     model: "Sportage",
     price: 89.99,
-    rating: 4.5,
+    isAvailable: false,
   },
 ];
 

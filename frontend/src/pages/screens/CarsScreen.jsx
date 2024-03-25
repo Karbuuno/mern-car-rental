@@ -34,8 +34,8 @@ function HomeScreen() {
                         <div className='flex justify-around'>
                           <div>
                             <div>Suv</div>
-                            <h1 className='font-bold'>Kia Sportage</h1>
-                            <div className=''>$89/day</div>
+                            <h1 className='font-bold'>{car.model}</h1>
+                            <div className=''>${car.price}/day</div>
                           </div>
                           <div>⭐⭐⭐⭐⭐</div>
                         </div>
