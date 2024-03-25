@@ -20,7 +20,7 @@ function CarDetailsScreen() {
   // const { user, setUser } = UseContext();
   const { id } = useParams();
 
-  console.log(from, to, totalDays);
+  console.log(id, from, to, totalDays);
   const { data, error, isLoading } = useQuery({
     queryKey: ["cars", id],
     queryFn: () => carDetails(id),

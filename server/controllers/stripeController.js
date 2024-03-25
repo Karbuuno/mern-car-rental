@@ -29,6 +29,7 @@ const createPayment = async (req, res) => {
             currency: "USD",
             product_data: {
               name: make,
+              images: [image],
             },
             unit_amount: totalPrice * 100,
           },

@@ -51,9 +51,9 @@ export const carDetails = async id => {
 };
 
 //search car details
-export const SearchCarsData = async (location, from, to) => {
+export const SearchCarsData = async location => {
   const { data } = await axios.get(`/api/cars/search/${location}`);
-
+  console.log(data);
   return data;
 };
 

@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useLocation,
+  useSearchParams,
+} from "react-router-dom";
 import { useMutation, useQueryClient } from "react-query";
 
 import { login } from "../api/api.js";
@@ -10,18 +15,39 @@ function LoginForm() {
   const { user, setUser } = UseContext();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [redirectValue, setRedirectValue] = useState("");
   const navigate = useNavigate();
   const QueryClient = useQueryClient();
   //Redirecting
   const { search } = useLocation();
-  const searchParams = new URLSearchParams(search);
-  const redirect = searchParams.get("redirect") || "/";
+  // const searchParams = new URLSearchParams(search);
+
+  const [searchParams] = useSearchParams();
+
+  // for (const entry of searchParams.entries()) {
+  //   console.log(entry);
+  // }
+
+  // const redirect = redirectValue || "/";
 
   useEffect(() => {
     if (user) {
-      navigate(redirect);
+      navigate(redirectValue);
     }
-  }, [navigate, redirect, user]);
+  }, [navigate, redirectValue, user]);
+
+  useEffect(() => {
+    const { redirect, totalDays, from, to } = Object.fromEntries([
+      ...searchParams,
+    ]);
+
+    // console.log("first search", redirect);
+    // console.log("first search", totalDays);
+    // {redirect: '/car/65f0d4270f8003aa72c3e628', totalDays: '7'
+    const updatedValue = `${redirect}?from${from}&tom${to}&totalDays=${totalDays}`;
+    console.log("udpaetd ", updatedValue);
+    setRedirectValue(updatedValue);
+  }, [searchParams]);
 
   const { mutate, isError, onSuccess } = useMutation({
     mutationFn: login,
@@ -37,7 +63,7 @@ function LoginForm() {
 
   const submitHandler = async e => {
     e.preventDefault();
-    navigate(redirect);
+    // navigate(redirect);
     mutate({ email, password });
   };
 
@@ -69,9 +95,9 @@ function LoginForm() {
           >
             Login
           </button>
-          <Link to={redirect ? `/register?redirect=${redirect}` : "/register"}>
+          {/* <Link to={redirect ? `/register?redirect=${redirect}` : "/register"}>
             Don't have an account? <span>Register</span>
-          </Link>
+          </Link> */}
         </form>
       </div>
     </div>

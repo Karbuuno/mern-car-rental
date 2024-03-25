@@ -8,7 +8,7 @@ import Search from "./Search";
 
 function HomeScreen() {
   const { data, error, isLoading } = useQuery("users", allCarsData);
-  // console.log(data);
+  console.log(error);
   const navigate = useNavigate();
 
   return (

@@ -3,7 +3,12 @@ import { GiGearStickPattern } from "react-icons/gi";
 import { useQuery } from "react-query";
 
 // import { UseContext } from "@/components/context/AuthContext";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import {
+  createSearchParams,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import { SearchCarsData } from "@/components/api/api";
 import { dayDifference } from "@/components/api/daysDiff";
 
@@ -18,11 +23,28 @@ function Location() {
 
   const totalDays = dayDifference(from, to);
 
-  // console.log(from, to, totalDays);
+  console.log(from, to, totalDays);
   const { data, error, isLoading } = useQuery({
     queryKey: ["search", location],
     queryFn: () => SearchCarsData(location),
   });
+
+  console.log("data", data);
+
+  // redirect=/car/${
+  //   car._id
+  // }&totalDays=${encodeURIComponent(
+  //   totalDays
+  // )}&from=${encodeURIComponent(
+  //   from
+  // )}&to=${encodeURIComponent(to)}
+
+  const params = { totalDays: totalDays };
+
+  // navigate({
+  //   pathname: "/posts",
+  //   search: `?${createSearchParams(params)}`,
+  // });
 
   return (
     <>
@@ -92,11 +114,33 @@ function Location() {
                     </div>
                     <div className='mx-2 my-2'>
                       <button
-                        onClick={() =>
-                          navigate(
-                            `/login?redirect=/car/${car._id}?totalDays=${totalDays}`
-                          )
-                        }
+                        // onClick={() =>
+                        //   navigate(
+                        //     `/login?redirect=/car/${car._id}&totalDays=${totalDays}`
+                        //   )
+                        // }
+                        onClick={() => {
+                          navigate({
+                            pathname: `/login`,
+                            search: `?${createSearchParams({
+                              redirect: `/car/${car._id}`,
+                              totalDays: totalDays,
+                              from: from,
+                              to: to,
+                            })}`,
+                          });
+                        }}
+                        // onClick={() =>
+                        //   navigate(
+                        //     `/login?redirect=/car/${
+                        //       car._id
+                        //     }&totalDays=${encodeURIComponent(
+                        //       totalDays
+                        //     )}&from=${encodeURIComponent(
+                        //       from
+                        //     )}&to=${encodeURIComponent(to)}`
+                        //   )
+                        // }
                         className=' group-hover: bg-gradient-to-r from-blue-400 to-blue-600 p-2 rounded text-white  w-full '
                       >
                         View More Details
