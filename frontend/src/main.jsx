@@ -19,6 +19,7 @@ import Search from "./pages/screens/Search.jsx";
 import Location from "./pages/screens/Location.jsx";
 import Checkout_session from "./pages/screens/Checkout_session.jsx";
 import CarList from "./pages/screens/CarList.jsx";
+import AdminRoute from "./components/AdminRoute.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,11 +28,14 @@ const router = createBrowserRouter(
       <Route path='/login' element={<LoginForm />} />
       <Route path='/register' element={<Register />} />
       <Route path='/cars' element={<Cars />} />
-      <Route path='/carList' element={<CarList />} />
+
       <Route path='/car/:id' element={<CarScreen />} />
 
       <Route path='/cars/search/:location' element={<Location />} />
       <Route path='/checkout_session' element={<Checkout_session />} />
+      <Route path='' element={<AdminRoute />}>
+        <Route path='/carlist' element={<CarList />} />
+      </Route>
     </Route>
   )
 );
