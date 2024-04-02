@@ -20,7 +20,7 @@ function HomeScreen() {
           {isLoading ? (
             <h3>...loading</h3>
           ) : error ? (
-            <h3>{error.data.massage}</h3>
+            <h3>{<h3>Dta not found</h3>}</h3>
           ) : (
             <>
               {data.cars.map(car => (

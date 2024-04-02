@@ -77,7 +77,7 @@ export default function DialogForm() {
       <div>
         <Dialog className=''>
           <DialogTrigger>
-            <Button>Create Car </Button>
+            <Button className='m-5'>Create Car </Button>
           </DialogTrigger>
           <DialogContent className='w-[850px]'>
             <DialogHeader>
@@ -206,7 +206,7 @@ export default function DialogForm() {
                 </div>
               </div>
               <DialogFooter>
-                <Button type='submit'>Create Car</Button>
+                <Button type='submit'>Submit</Button>
               </DialogFooter>
             </form>
           </DialogContent>

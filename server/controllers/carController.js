@@ -4,7 +4,7 @@ import cloudinary from "../config/clodinary.js";
 
 const getCars = asyncHandler(async (req, res) => {
   try {
-    const cars = await Car.find({});
+    const cars = await Car.find({}).sort("-createdAt");
     res.json({ cars });
   } catch (error) {
     res.status(404);
