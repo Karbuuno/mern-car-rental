@@ -49,6 +49,14 @@ export const carDetails = async id => {
   const { data } = await axios.get(`/api/cars/${id}`);
   return data;
 };
+// register a car
+export const registerCar = async FormData => {
+  const { data } = await axios.post("/api/cars/", FormData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+
+  return data;
+};
 
 //search car details
 export const SearchCarsData = async location => {

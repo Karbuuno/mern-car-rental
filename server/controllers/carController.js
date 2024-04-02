@@ -1,5 +1,6 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import Car from "../models/CarModel.js";
+import cloudinary from "../config/clodinary.js";
 
 const getCars = asyncHandler(async (req, res) => {
   try {
@@ -71,12 +72,25 @@ const registerCar = asyncHandler(async (req, res) => {
   } else {
   }
 
+  let result;
+
+  if (req.file) {
+    let encodedImage = `data:image/jpeg;base64,${req.file.buffer.toString(
+      "base64"
+    )}`;
+
+    result = await cloudinary.uploader.upload(encodedImage, {
+      resource_type: "image",
+      transformation: [{ width: 500, height: 500, crop: "limit" }],
+      encoding: "base64",
+    });
+  }
   const car = await Car.create({
     name,
     regNumber,
     seats,
     doors,
-    image,
+    image: result?.url || null,
     carType,
     gear,
     description,

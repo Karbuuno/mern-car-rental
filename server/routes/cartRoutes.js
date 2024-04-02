@@ -7,8 +7,12 @@ import {
   registerCar,
 } from "../controllers/carController.js";
 import { protect, admin } from "../middleware/authMiddleware.js";
+import upload from "../middleware/upload.js";
 
-router.route("/").get(getCars).post(protect, admin, registerCar);
+router
+  .route("/")
+  .get(getCars)
+  .post(protect, admin, upload.single("image"), registerCar);
 router.route("/:id").get(getCar);
 router.route("/search/:location").get(searchCars);
 

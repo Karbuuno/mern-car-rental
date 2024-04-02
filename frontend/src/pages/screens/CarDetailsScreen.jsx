@@ -5,11 +5,12 @@ import { carDetails, checkout } from "@/components/api/api";
 // import { dayDifference } from "@/components/api/daysDiff";
 
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { UseContext } from "@/components/context/AuthContext";
 
 function CarDetailsScreen() {
   const { search } = useLocation();
+  const QueryClient = useQueryClient();
   // const navigate = useNavigate();
   const searchParams = new URLSearchParams(search);
   const from = searchParams.get("from");
@@ -26,6 +27,16 @@ function CarDetailsScreen() {
     queryFn: () => carDetails(id),
   });
 
+  /// tripe dat
+  const stripeMutation = useMutation({
+    mutationFn: checkout,
+    onSuccess: data => {
+      QueryClient.invalidateQueries({ queryKey: ["checkout"] });
+      // navigate("/");
+      console.log(data);
+    },
+  });
+
   let stripeData = {
     totalPrice: Math.floor(data?.car?.price * totalDays),
     image: data?.car?.image,
@@ -34,7 +45,7 @@ function CarDetailsScreen() {
 
   const handlePayment = async e => {
     e.preventDefault();
-    checkout(stripeData);
+    stripeMutation.mutate(stripeData);
   };
 
   return (
