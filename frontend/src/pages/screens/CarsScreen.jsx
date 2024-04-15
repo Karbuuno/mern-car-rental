@@ -7,8 +7,8 @@ import { allCarsData } from "@/components/api/api";
 import Search from "./Search";
 
 function HomeScreen() {
-  const { data, error, isLoading } = useQuery("users", allCarsData);
-  console.log(error);
+  const { data, error, isLoading } = useQuery("cars", allCarsData);
+
   const navigate = useNavigate();
 
   return (

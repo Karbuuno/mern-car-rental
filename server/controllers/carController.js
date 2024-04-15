@@ -108,4 +108,97 @@ const registerCar = asyncHandler(async (req, res) => {
   }
 });
 
-export { getCars, getCar, searchCars, registerCar };
+// update Car
+const updateCar = asyncHandler(async (req, res) => {
+  try {
+    let updatedFields = {
+      name: req.body.name,
+      regNumber: req.body.regNumber,
+      seats: req.body.seats,
+      doors: req.body.doors,
+      carType: req.body.carType,
+      gear: req.body.gear,
+      description: req.body.description,
+      location: req.body.location,
+      fuel: req.body.fuel,
+      model: req.body.model,
+      price: req.body.price,
+    };
+
+    if (req.file) {
+      let encodedImage = `data:image/jpeg;base64,${req.file.buffer.toString(
+        "base64"
+      )}`;
+      const result = await cloudinary.uploader.upload(encodedImage, {
+        resource_type: "image",
+        transformation: [{ width: 500, height: 500, crop: "limit" }],
+        encoding: "base64",
+      });
+      updatedFields.image = result.url;
+    }
+
+    const car = await Car.findByIdAndUpdate(req.params.id, updatedFields, {
+      new: true,
+    });
+    const updatedCar = await car.save();
+    res.json(updatedCar);
+  } catch (error) {
+    console.log(error);
+    res.status(404);
+    throw new Error("Car not found");
+  }
+
+  // const {
+  //   name,
+  //   regNumber,
+  //   seats,
+  //   doors,
+  //   image,
+  //   carType,
+  //   gear,
+  //   description,
+  //   location,
+  //   fuel,
+  //   model,
+  //   price,
+  // } = req.body;
+
+  // const car = await Car.findById(req.params.id);
+
+  // if (car) {
+  //   car.name = name;
+  //   car.price = price;
+  //   car.description = description;
+  //   car.image = image;
+  //   car.carType = carType;
+  //   car.model = model;
+  //   car.fuel = fuel;
+  //   car.regNumber = regNumber;
+  //   car.seats = seats;
+  //   car.location = location;
+  //   car.gear = gear;
+  //   car.doors = doors;
+
+  //   const updatedCar = await car.save();
+  //   res.json(updatedCar);
+  // } else {
+  //   res.status(404);
+  //   throw new Error("Car not found");
+  // }
+});
+
+// Delete car
+
+const deletePCar = asyncHandler(async (req, res) => {
+  const car = await Car.findById(req.params.id);
+
+  if (car) {
+    await Car.deleteOne({ _id: car._id });
+    res.json({ message: "Car removed" });
+  } else {
+    res.status(404);
+    throw new Error("car not found");
+  }
+});
+
+export { getCars, getCar, searchCars, registerCar, deletePCar, updateCar };

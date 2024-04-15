@@ -85,3 +85,17 @@ export const checkout = async stripeData => {
     console.log(error.message);
   }
 };
+
+//Update car
+export const updateCar = async updatedCar => {
+  const { data } = await axios.put(`/api/cars/${updatedCar._id}`, updatedCar, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  return data;
+};
+
+// Delete car
+export const deleteCar = async id => {
+  const { data } = await axios.delete(`/api/cars/${id}`);
+  return data;
+};

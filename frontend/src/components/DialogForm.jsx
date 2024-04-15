@@ -7,15 +7,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { registerCar } from "@/components/api/api";
+import { deleteCar, registerCar, updateCar } from "@/components/api/api";
 import { useEffect, useState } from "react";
-import { Button } from "./ui/button";
+import { MdEdit } from "react-icons/md";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { useMutation, useQueryClient } from "react-query";
+import { useNavigate } from "react-router-dom";
 
-export default function DialogForm() {
+export default function DialogForm({ carToEdit, buttonTitle }) {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [model, setModel] = useState("");
   const [regNumber, setRegNumber] = useState("");
@@ -29,14 +31,37 @@ export default function DialogForm() {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState("");
-
   const QueryClient = useQueryClient();
+
+  const isEditing = carToEdit != null;
+
+  useEffect(() => {
+    if (isEditing) {
+      setName(carToEdit.name);
+      setModel(carToEdit.model);
+      setRegNumber(carToEdit.regNumber);
+      setPrice(carToEdit.price);
+      setSeats(carToEdit.seats);
+      setDoors(carToEdit.doors);
+      setCarType(carToEdit.carType);
+      setGear(carToEdit.gear);
+      setLocation(carToEdit.location);
+      setImage(carToEdit.image);
+      setFuel(carToEdit.fuel);
+      setDescription(carToEdit.description);
+    }
+  }, [carToEdit]);
 
   const carCreateMutation = useMutation({
     mutationFn: registerCar,
     onSuccess: data => {
-      QueryClient.invalidateQueries({ queryKey: ["registerCar"] });
-      // navigate("/");
+      QueryClient.invalidateQueries({ queryKey: ["cars"] });
+    },
+  });
+  const carUpdateMutation = useMutation({
+    mutationFn: updateCar,
+    onSuccess: data => {
+      QueryClient.invalidateQueries({ queryKey: ["cars"] });
       console.log(data);
     },
   });
@@ -68,16 +93,41 @@ export default function DialogForm() {
     if (image) {
       formData.append("image", image);
     }
-    carCreateMutation.mutate(formData);
-    console.log(formData);
+
+    if (isEditing) {
+      carUpdateMutation.mutate({ _id: carToEdit._id, formData: formData });
+    } else {
+      carCreateMutation.mutate(formData);
+    }
+    console.log(carToEdit);
+
+    setName("");
+    setModel("");
+    setRegNumber("");
+    setPrice("");
+    setSeats("");
+    setDoors("");
+    setCarType("");
+    setGear("");
+    setLocation("");
+    setFuel("");
+    setDescription("");
+    navigate("/admin/carlist");
   };
 
   return (
     <>
       <div>
         <Dialog className=''>
-          <DialogTrigger>
-            <Button className='m-5'>Create Car </Button>
+          <DialogTrigger className='m-5'>
+            {buttonTitle ? (
+              <span>{<MdEdit className='text-2xl' />}</span>
+            ) : (
+              <span className='p-2 font-bold shadow bg-black rounded-md text-white'>
+                Create Car
+              </span>
+              //   "{Create a Car"
+            )}
           </DialogTrigger>
           <DialogContent className='w-[850px]'>
             <DialogHeader>
@@ -94,6 +144,7 @@ export default function DialogForm() {
                   <div>
                     <Label htmlFor='name'>Name</Label>
                     <Input
+                      required
                       id='name'
                       value={name}
                       onChange={e => setName(e.target.value)}
@@ -102,6 +153,7 @@ export default function DialogForm() {
                   <div>
                     <Label htmlFor='model'>Model</Label>
                     <Input
+                      required
                       id='model'
                       value={model}
                       onChange={e => setModel(e.target.value)}
@@ -110,6 +162,7 @@ export default function DialogForm() {
                   <div>
                     <Label htmlFor='number'>Price</Label>
                     <Input
+                      required
                       type='number'
                       id='price'
                       value={price}
@@ -127,6 +180,7 @@ export default function DialogForm() {
                   <div>
                     <Label htmlFor='seats'>Seats</Label>
                     <Input
+                      required
                       type='number'
                       id='seats'
                       value={seats}
@@ -136,6 +190,7 @@ export default function DialogForm() {
                   <div>
                     <Label htmlFor='doors'>Doors</Label>
                     <Input
+                      required
                       type='number'
                       id='doors'
                       value={doors}
@@ -147,6 +202,7 @@ export default function DialogForm() {
                   <div>
                     <Label htmlFor='carType'>CarType</Label>
                     <Input
+                      required
                       id='carType'
                       value={carType}
                       onChange={e => setCarType(e.target.value)}
@@ -155,6 +211,7 @@ export default function DialogForm() {
                   <div>
                     <Label htmlFor='gear'>Gear</Label>
                     <Input
+                      required
                       id='gear'
                       value={gear}
                       onChange={e => setGear(e.target.value)}
@@ -163,6 +220,7 @@ export default function DialogForm() {
                   <div>
                     <Label htmlFor='location'>Location</Label>
                     <Input
+                      required
                       id='location'
                       value={location}
                       onChange={e => setLocation(e.target.value)}
@@ -172,6 +230,7 @@ export default function DialogForm() {
                   <div>
                     <Label htmlFor='fuel'>Fuel</Label>
                     <Input
+                      required
                       id='fuel'
                       value={fuel}
                       onChange={e => setFuel(e.target.value)}
@@ -180,6 +239,7 @@ export default function DialogForm() {
                   <div>
                     <Label htmlFor='description'>Description</Label>
                     <Textarea
+                      required
                       id='description'
                       value={description}
                       onChange={e => setDescription(e.target.value)}
@@ -205,9 +265,10 @@ export default function DialogForm() {
                   </div>
                 </div>
               </div>
-              <DialogFooter>
-                <Button type='submit'>Submit</Button>
-              </DialogFooter>
+              {/* <DialogFooter type='submit'>Submit</DialogFooter> */}
+              <div className='font-bold flex justify-center '>
+                <button type='submit'>Submit</button>
+              </div>
             </form>
           </DialogContent>
         </Dialog>
