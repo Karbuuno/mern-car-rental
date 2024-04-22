@@ -15,6 +15,7 @@ import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function DialogForm({ carToEdit, buttonTitle }) {
   const navigate = useNavigate();
@@ -89,30 +90,36 @@ export default function DialogForm({ carToEdit, buttonTitle }) {
     formData.append("fuel", fuel);
     formData.append("location", location);
     formData.append("description", description);
+    try {
+      if (image) {
+        formData.append("image", image);
+      }
+      let response;
+      if (isEditing) {
+        response = await axios.put(`/api/cars/${carToEdit._id}`, formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        // carUpdateMutation.mutate({ _id: carToEdit._id, formData: formData });
+      } else {
+        carCreateMutation.mutate(formData);
+      }
+      console.log(carToEdit);
 
-    if (image) {
-      formData.append("image", image);
+      setName("");
+      setModel("");
+      setRegNumber("");
+      setPrice("");
+      setSeats("");
+      setDoors("");
+      setCarType("");
+      setGear("");
+      setLocation("");
+      setFuel("");
+      setDescription("");
+      navigate("/admin/carlist");
+    } catch (error) {
+      console.error("Car operation error", error);
     }
-
-    if (isEditing) {
-      carUpdateMutation.mutate({ _id: carToEdit._id, formData: formData });
-    } else {
-      carCreateMutation.mutate(formData);
-    }
-    console.log(carToEdit);
-
-    setName("");
-    setModel("");
-    setRegNumber("");
-    setPrice("");
-    setSeats("");
-    setDoors("");
-    setCarType("");
-    setGear("");
-    setLocation("");
-    setFuel("");
-    setDescription("");
-    navigate("/admin/carlist");
   };
 
   return (

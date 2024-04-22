@@ -19,7 +19,10 @@ import Search from "./pages/screens/Search.jsx";
 import Location from "./pages/screens/Location.jsx";
 import Checkout_session from "./pages/screens/Checkout_session.jsx";
 import CarList from "./pages/screens/admin/CarList.jsx";
-import AdminRoute from "./components/AdminRoute.jsx";
+import AdminRoute from "./pages/screens/admin/AdminRoute.jsx";
+import UserProfile from "./pages/screens/UserProfile.jsx";
+import PrivateRoute from "./pages/screens/PrivateRoute.jsx";
+import MyBooking from "./pages/screens/MyBooking.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,13 +31,17 @@ const router = createBrowserRouter(
       <Route path='/login' element={<LoginForm />} />
       <Route path='/register' element={<Register />} />
       <Route path='/cars' element={<Cars />} />
-
       <Route path='/car/:id' element={<CarScreen />} />
-
       <Route path='/cars/search/:location' element={<Location />} />
       <Route path='/checkout_session' element={<Checkout_session />} />
+      {/* Authorized User */}
+      <Route path='' element={<PrivateRoute />}>
+        <Route path='/profile' element={<UserProfile />} />
+        <Route path='/my-booking' element={<MyBooking />} />
+      </Route>
+      {/* Admin User */}
       <Route path='' element={<AdminRoute />}>
-        <Route path='/admin/carlist' element={<CarList />} />
+        <Route path='/cars/admin/carlist' element={<CarList />} />
       </Route>
     </Route>
   )

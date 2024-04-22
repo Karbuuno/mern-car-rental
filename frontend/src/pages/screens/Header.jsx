@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { FaRegUser } from "react-icons/fa";
-import { IoLogOutOutline } from "react-icons/io5";
+// import { FaRegUser } from "react-icons/fa";
+
 import { logout } from "@/components/api/api";
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { useMutation, useQueryClient } from "react-query";
 import { UseContext } from "@/components/context/AuthContext";
+import DropDownMenu from "@/components/DropDownMenu";
 
 function Header() {
   const [nav, setNav] = useState(false);
@@ -15,27 +16,6 @@ function Header() {
   const { user, setUser } = UseContext();
 
   const location = useLocation();
-
-  const { mutate, isError, onSuccess } = useMutation({
-    mutationFn: logout,
-    onSuccess: data => {
-      QueryClient.invalidateQueries({ queryKey: ["logout"] });
-      setUser(data);
-      console.log(data);
-    },
-    isError: err => {
-      console.log(err);
-    },
-  });
-
-  const logoutHandler = async e => {
-    e.preventDefault();
-    if (user) {
-      localStorage.removeItem("user");
-    }
-    mutate();
-    navigate("/");
-  };
 
   useEffect(() => {
     setNav(false);
@@ -61,12 +41,10 @@ function Header() {
           <div className='px-4 cursor-pointer capitalize font-medium text-gray-500 '>
             {user ? (
               <Link to='/login'>
-                <IoLogOutOutline className='h-7 w-7' onClick={logoutHandler} />
+                <DropDownMenu />
               </Link>
             ) : (
-              <Link to='/login'>
-                <FaRegUser className='h-7 w-7' />
-              </Link>
+              <Link to='/login'>Login</Link>
             )}
           </div>
         </div>

@@ -93,6 +93,12 @@ export const updateCar = async updatedCar => {
   });
   return data;
 };
+export const updateProfile = async updatedUser => {
+  const { data } = await axios.put(`/api/users/profile`, updatedUser, {
+    headers: { "Content-Type": "application/json" },
+  });
+  return data;
+};
 
 // Delete car
 export const deleteCar = async id => {
