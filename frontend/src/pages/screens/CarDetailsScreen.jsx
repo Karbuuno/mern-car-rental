@@ -16,12 +16,12 @@ function CarDetailsScreen() {
   const from = searchParams.get("from");
   const to = searchParams.get("to");
   const totalDays = searchParams.get("totalDays");
+  console.log(from, to);
 
   // const totalDays = dayDifference(from, to);
-  // const { user, setUser } = UseContext();
+  const { user, setUser } = UseContext();
   const { id } = useParams();
 
-  console.log(id, from, to, totalDays);
   const { data, error, isLoading } = useQuery({
     queryKey: ["cars", id],
     queryFn: () => carDetails(id),
@@ -39,8 +39,14 @@ function CarDetailsScreen() {
 
   let stripeData = {
     totalPrice: Math.floor(data?.car?.price * totalDays),
+    userId: user._id,
+    carId: data?.car?._id,
     image: data?.car?.image,
     make: data?.car?.name,
+    regNumber: data?.car?.regNumber,
+    isAvailable: data?.car?.isAvailable,
+    startDate: from,
+    endDate: to,
   };
 
   const handlePayment = async e => {

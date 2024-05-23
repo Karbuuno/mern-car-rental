@@ -3,10 +3,27 @@ import dotenv from "dotenv";
 dotenv.config();
 import Stripe from "stripe";
 const stripe = Stripe(process.env.STRIPE_KEY);
-
+import Bookings from "../models/BookingModel.js";
+import Car from "../models/CarModel.js";
 const createPayment = async (req, res) => {
   try {
-    const { totalPrice, make, image, startDate, endDate } = req.body;
+    const {
+      totalPrice,
+      make,
+      image,
+      regNumber,
+      isAvailable,
+      userId,
+      carId,
+      startDate,
+      endDate,
+    } = req.body;
+
+    const booked = Car.findByIdAndUpdate(
+      carId,
+      { isAvailable: false },
+      { new: true }
+    );
     const session = await stripe.checkout.sessions.create({
       //   metadata: {
       //     user: req.user.userId,
@@ -41,7 +58,20 @@ const createPayment = async (req, res) => {
       cancel_url: `${process.env.CLIENT_URL}/`,
     });
     res.send({ url: session.url });
-    console.log(session);
+
+    if (session.url) {
+      console.log(isAvailable);
+      const booking = await Bookings.create({
+        user: userId,
+        car: carId,
+        make,
+        regNumber,
+        startDate,
+        endDate,
+        isAvailable: booked.isAvailable,
+        totalPrice,
+      });
+    }
   } catch (error) {
     console.log("error at stripe", error);
     res.status(400);

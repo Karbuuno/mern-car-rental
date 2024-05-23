@@ -52,9 +52,9 @@ const carSchema = mongoose.Schema(
     },
 
     isAvailable: {
-      type: String,
+      type: Boolean,
       required: true,
-      default: false,
+      default: true,
     },
 
     price: {

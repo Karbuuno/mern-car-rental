@@ -14,7 +14,7 @@ const carData = [
     location: "Bristol",
     model: "Sportage",
     price: 89.99,
-    isAvailable: false,
+    isAvailable: true,
   },
   {
     name: "Toyota",
@@ -31,7 +31,7 @@ const carData = [
     location: "London",
     model: "Sportage",
     price: 89.99,
-    isAvailable: false,
+    isAvailable: true,
   },
   {
     name: "KIA",
@@ -48,7 +48,7 @@ const carData = [
     model: "Sportage",
     location: "London",
     price: 89.99,
-    isAvailable: false,
+    isAvailable: true,
   },
   {
     name: "KIA",
@@ -65,7 +65,7 @@ const carData = [
     location: "Birmingham",
     model: "Sportage",
     price: 89.99,
-    isAvailable: false,
+    isAvailable: true,
   },
   {
     name: "KIA",
@@ -83,7 +83,7 @@ const carData = [
     model: "Sportage",
 
     price: 89.99,
-    isAvailable: false,
+    isAvailable: true,
   },
   {
     name: "KIA",
@@ -100,7 +100,7 @@ const carData = [
     location: "Bristol",
     model: "Sportage",
     price: 89.99,
-    isAvailable: false,
+    isAvailable: true,
   },
 ];
 

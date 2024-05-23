@@ -26,9 +26,9 @@ function UserProfile() {
 
   useEffect(() => {
     if (user) {
-      setName(user.name);
-      setEmail(user.email);
-      setPassword(user.password);
+      setName(user.name || "");
+      setEmail(user.email || "");
+      setPassword(user.password || "");
     }
   }, [user]);
 
@@ -69,7 +69,7 @@ function UserProfile() {
                     name='name'
                     id='name'
                     type='text'
-                    value={name || ""}
+                    value={name}
                     onChange={e => setName(e.target.value)}
                     placeholder='Enter your name'
                   />
@@ -80,7 +80,7 @@ function UserProfile() {
                     id='name'
                     type='text'
                     name='email'
-                    value={email || ""}
+                    value={email}
                     onChange={e => setEmail(e.target.value)}
                     placeholder='Enter your email'
                   />
@@ -91,7 +91,7 @@ function UserProfile() {
                     id='name'
                     type='password'
                     name='password'
-                    value={password || ""}
+                    value={password}
                     onChange={e => setPassword(e.target.value)}
                     placeholder='Enter your password'
                   />

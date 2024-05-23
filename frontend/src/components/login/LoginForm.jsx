@@ -44,7 +44,7 @@ function LoginForm() {
     // console.log("first search", redirect);
     // console.log("first search", totalDays);
     // {redirect: '/car/65f0d4270f8003aa72c3e628', totalDays: '7'
-    const updatedValue = `${redirect}?from${from}&tom${to}&totalDays=${totalDays}`;
+    const updatedValue = `${redirect}?from=${from}&to=${to}&totalDays=${totalDays}`;
     console.log("udpaetd ", updatedValue);
     setRedirectValue(updatedValue);
   }, [searchParams]);

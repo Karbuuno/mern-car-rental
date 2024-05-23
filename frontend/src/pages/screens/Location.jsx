@@ -23,7 +23,7 @@ function Location() {
 
   const totalDays = dayDifference(from, to);
 
-  console.log(from, to, totalDays);
+  // console.log(from, to, totalDays);
   const { data, error, isLoading } = useQuery({
     queryKey: ["search", location],
     queryFn: () => SearchCarsData(location),
