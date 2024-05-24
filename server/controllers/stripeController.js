@@ -19,7 +19,7 @@ const createPayment = async (req, res) => {
       endDate,
     } = req.body;
 
-    const booked = Car.findByIdAndUpdate(
+    const booked = await Car.findByIdAndUpdate(
       carId,
       { isAvailable: false },
       { new: true }
@@ -60,7 +60,7 @@ const createPayment = async (req, res) => {
     res.send({ url: session.url });
 
     if (session.url) {
-      console.log(isAvailable);
+      console.log(booked);
       const booking = await Bookings.create({
         user: userId,
         car: carId,

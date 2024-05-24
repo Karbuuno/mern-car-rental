@@ -36,7 +36,6 @@ const bookingSchema = mongoose.Schema(
     isAvailable: {
       type: Boolean,
       required: true,
-      default: true,
     },
   },
   {
