@@ -59,7 +59,7 @@ function Location() {
             <>
               {data.searchedCar.map(car => (
                 <div key={car._id}>
-                  <div className=' flex flex-col rounded group-hover:hidden bg-gray-200 shadow-md mt-6 mx-auto  text-center  '>
+                  <div className=' flex flex-col rounded  bg-gray-200 shadow-md mt-6 mx-auto  text-center  '>
                     <div className='flex flex-row space-x-6 space-10  mix-blend-multiply'>
                       <div className='flex flex-col'>
                         <div className='mx-10 my-5'>
@@ -112,8 +112,9 @@ function Location() {
                         </div>
                       </div>
                     </div>
-                    <div className='mx-2 my-2'>
+                    <div className=' mx-2 my-2'>
                       <button
+                        disabled={car.isAvailable == false}
                         // onClick={() =>
                         //   navigate(
                         //     `/login?redirect=/car/${car._id}&totalDays=${totalDays}`
@@ -141,9 +142,18 @@ function Location() {
                         //     )}&to=${encodeURIComponent(to)}`
                         //   )
                         // }
-                        className=' group-hover: bg-gradient-to-r from-blue-400 to-blue-600 p-2 rounded text-white  w-full '
                       >
-                        View More Details
+                        {car.isAvailable == false ? (
+                          <div className='bg-gray-400 p-2 rounded text-white w-[300px]'>
+                            <span className='text-xl'>Car is booked until</span>
+                            &nbsp;
+                            <span className='text-black font-bold '>{to}</span>
+                          </div>
+                        ) : (
+                          <div className=' group-hover: bg-gradient-to-r from-blue-400 to-blue-600 p-2 rounded text-white w-[300px] '>
+                            View More Details
+                          </div>
+                        )}
                       </button>
                     </div>
                   </div>

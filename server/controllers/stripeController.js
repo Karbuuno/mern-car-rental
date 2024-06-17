@@ -17,6 +17,7 @@ const createPayment = async (req, res) => {
       carId,
       startDate,
       endDate,
+      totalDays,
     } = req.body;
 
     const booked = await Car.findByIdAndUpdate(
@@ -70,6 +71,7 @@ const createPayment = async (req, res) => {
         endDate,
         isAvailable: booked.isAvailable,
         totalPrice,
+        totalDays,
       });
     }
   } catch (error) {

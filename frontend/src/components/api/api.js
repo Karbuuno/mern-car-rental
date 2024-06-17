@@ -105,3 +105,12 @@ export const deleteCar = async id => {
   const { data } = await axios.delete(`/api/cars/${id}`);
   return data;
 };
+// user bookings
+export const userBookings = async () => {
+  const { data } = await axios.get("/api/bookings/myBookings");
+  return data;
+};
+export const allBookings = async () => {
+  const { data } = await axios.get("/api/bookings/allBookings");
+  return data;
+};

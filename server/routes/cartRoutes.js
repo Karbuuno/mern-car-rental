@@ -10,6 +10,7 @@ import {
 } from "../controllers/carController.js";
 import { protect, admin } from "../middleware/authMiddleware.js";
 import upload from "../middleware/upload.js";
+import { availableCar } from "../controllers/bookingController.js";
 
 router
   .route("/")
@@ -21,5 +22,6 @@ router
   .delete(deletePCar)
   .put(protect, admin, upload.single("image"), updateCar);
 router.route("/search/:location").get(searchCars);
+router.route("/available/:id").put(availableCar);
 
 export default router;

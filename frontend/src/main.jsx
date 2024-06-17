@@ -23,6 +23,7 @@ import AdminRoute from "./pages/screens/admin/AdminRoute.jsx";
 import UserProfile from "./pages/screens/UserProfile.jsx";
 import PrivateRoute from "./pages/screens/PrivateRoute.jsx";
 import MyBooking from "./pages/screens/MyBooking.jsx";
+import AllBookings from "./pages/screens/admin/AllBookings.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -42,6 +43,7 @@ const router = createBrowserRouter(
       {/* Admin User */}
       <Route path='' element={<AdminRoute />}>
         <Route path='/cars/admin/carlist' element={<CarList />} />
+        <Route path='/cars/admin/all-bookings' element={<AllBookings />} />
       </Route>
     </Route>
   )

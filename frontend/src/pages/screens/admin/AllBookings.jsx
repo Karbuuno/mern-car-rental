@@ -10,18 +10,11 @@ import {
 } from "@/components/ui/table";
 import { MdDelete } from "react-icons/md";
 import { useQuery } from "react-query";
-import { userBookings } from "@/components/api/api";
-import dayjs from "dayjs";
+import { allBookings } from "@/components/api/api";
 
-function MyBooking() {
-  const { data, error, isLoading } = useQuery("bookings", userBookings);
-
-  const today = dayjs();
-  const currentDate = today.format("YYYY-MM-DD");
-
-  const isPassedEndDate = (endDate, currentDate) => {
-    return endDate > currentDate;
-  };
+function AllBookings() {
+  const { data, error, isLoading } = useQuery("bookings", allBookings);
+  console.log(data);
 
   return (
     <>
@@ -43,7 +36,7 @@ function MyBooking() {
                 <TableHead>Action</TableHead>
               </TableRow>
             </TableHeader>
-            {data?.map(booking => (
+            {data?.bookings.map(booking => (
               <TableBody key={booking._id}>
                 <TableRow>
                   <TableCell className='font-medium'>
@@ -61,14 +54,10 @@ function MyBooking() {
                     {booking.totalPrice}
                   </TableCell>
                   <TableCell className='font-medium'>
-                    {!isPassedEndDate(booking.endDate, currentDate) ? (
-                      <MdDelete
-                        className='text-2xl text-red-500 cursor-pointer'
-                        // onClick={() => handleDelete(car?._id)}
-                      />
-                    ) : (
-                      <div></div>
-                    )}
+                    <MdDelete
+                      className='text-2xl text-red-500 cursor-pointer'
+                      // onClick={() => handleDelete(car?._id)}
+                    />
                   </TableCell>
                 </TableRow>
               </TableBody>
@@ -80,4 +69,4 @@ function MyBooking() {
   );
 }
 
-export default MyBooking;
+export default AllBookings;

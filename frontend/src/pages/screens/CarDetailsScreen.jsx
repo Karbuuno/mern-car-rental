@@ -47,6 +47,7 @@ function CarDetailsScreen() {
     isAvailable: data?.car?.isAvailable,
     startDate: from,
     endDate: to,
+    totalDays,
   };
 
   const handlePayment = async e => {
