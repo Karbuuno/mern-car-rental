@@ -9,7 +9,7 @@ const getMyBooking = asyncHandler(async (req, res) => {
   res.json(myBookings);
 });
 const allBooking = asyncHandler(async (req, res) => {
-  const bookings = await Bookings.find({});
+  const bookings = await Bookings.find({}).sort("-createdAt");
   res.json({ length: bookings.length, bookings });
 });
 

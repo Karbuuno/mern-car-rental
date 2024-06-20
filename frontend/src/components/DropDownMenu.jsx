@@ -13,6 +13,7 @@ import { UseContext } from "./context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "react-query";
 import { logout } from "./api/api";
+import AllBookings from "./../pages/screens/admin/AllBookings";
 function DropDownMenu() {
   const QueryClient = useQueryClient();
   const navigate = useNavigate();
@@ -54,6 +55,11 @@ function DropDownMenu() {
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <Link to='/profile'>Profile</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                {user && user.isAdmin && (
+                  <Link to='/cars/admin/all-bookings'>All Bookings</Link>
+                )}
               </DropdownMenuItem>
               <DropdownMenuItem>
                 {user && user.isAdmin ? (

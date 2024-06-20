@@ -11,10 +11,15 @@ import {
 import { MdDelete } from "react-icons/md";
 import { useQuery } from "react-query";
 import { allBookings } from "@/components/api/api";
+import dayjs from "dayjs";
 
 function AllBookings() {
   const { data, error, isLoading } = useQuery("bookings", allBookings);
-  console.log(data);
+  const today = dayjs();
+  const currentDate = today.format("YYYY-MM-DD");
+  const isPassedEndDate = (endDate, currentDate) => {
+    return endDate > currentDate;
+  };
 
   return (
     <>
@@ -54,10 +59,14 @@ function AllBookings() {
                     {booking.totalPrice}
                   </TableCell>
                   <TableCell className='font-medium'>
-                    <MdDelete
-                      className='text-2xl text-red-500 cursor-pointer'
-                      // onClick={() => handleDelete(car?._id)}
-                    />
+                    {!isPassedEndDate(booking.endDate, currentDate) ? (
+                      <MdDelete
+                        className='text-2xl text-red-500 cursor-pointer'
+                        // onClick={() => handleDelete(car?._id)}
+                      />
+                    ) : (
+                      <div></div>
+                    )}
                   </TableCell>
                 </TableRow>
               </TableBody>

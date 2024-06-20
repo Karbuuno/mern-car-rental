@@ -11,6 +11,7 @@ import {
 import { MdDelete } from "react-icons/md";
 import { useQuery } from "react-query";
 import { userBookings } from "@/components/api/api";
+import { dayDifference } from "@/components/api/daysDiff";
 import dayjs from "dayjs";
 
 function MyBooking() {
@@ -67,7 +68,9 @@ function MyBooking() {
                         // onClick={() => handleDelete(car?._id)}
                       />
                     ) : (
-                      <div></div>
+                      <div>
+                        {dayDifference(currentDate, booking.endDate)} Days Left
+                      </div>
                     )}
                   </TableCell>
                 </TableRow>
