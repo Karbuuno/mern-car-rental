@@ -116,7 +116,7 @@ export default function DialogForm({ carToEdit, buttonTitle }) {
       setLocation("");
       setFuel("");
       setDescription("");
-      navigate("/admin/carlist");
+      navigate("/cars/admin/carlist");
     } catch (error) {
       console.error("Car operation error", error);
     }

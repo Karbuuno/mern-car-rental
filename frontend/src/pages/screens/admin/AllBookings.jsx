@@ -9,16 +9,31 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { MdDelete } from "react-icons/md";
-import { useQuery } from "react-query";
-import { allBookings } from "@/components/api/api";
+import { QueryClient, useMutation, useQuery } from "react-query";
+import { allBookings, carAvailable } from "@/components/api/api";
 import dayjs from "dayjs";
+import { dayDifference } from "@/components/api/daysDiff";
 
 function AllBookings() {
+  // fetch all bookings
   const { data, error, isLoading } = useQuery("bookings", allBookings);
+  //getting current data
   const today = dayjs();
   const currentDate = today.format("YYYY-MM-DD");
   const isPassedEndDate = (endDate, currentDate) => {
     return endDate > currentDate;
+  };
+  // car availability
+  const carAvailableMutation = useMutation({
+    mutationFn: carAvailable,
+    onSuccess: data => {
+      QueryClient.invalidateQueries({ queryKey: ["bookings"] });
+      console.log(data);
+    },
+  });
+  // handle available
+  const handleAvailable = async id => {
+    carAvailableMutation.mutate(id);
   };
 
   return (
@@ -30,7 +45,7 @@ function AllBookings() {
           <h3>{<h3>Data not found</h3>}</h3>
         ) : (
           <Table>
-            <TableCaption>A list of your recent invoices.</TableCaption>
+            <TableCaption>A list of your recent Booking.</TableCaption>
             <TableHeader>
               <TableRow>
                 <TableHead>Reg Number</TableHead>
@@ -38,6 +53,7 @@ function AllBookings() {
                 <TableHead>Start Date</TableHead>
                 <TableHead>End Date</TableHead>
                 <TableHead>Amount</TableHead>
+                <TableHead>Car Availability</TableHead>
                 <TableHead>Action</TableHead>
               </TableRow>
             </TableHeader>
@@ -58,14 +74,29 @@ function AllBookings() {
                     <span className='font-bold'>£</span>
                     {booking.totalPrice}
                   </TableCell>
+                  <TableCell>
+                    {booking.isAvailable === false && (
+                      <button
+                        onClick={() =>
+                          handleAvailable(booking?._id, {
+                            isAvailable: booking.isAvailable,
+                          })
+                        }
+                      >
+                        Booked
+                      </button>
+                    )}
+                  </TableCell>
                   <TableCell className='font-medium'>
-                    {!isPassedEndDate(booking.endDate, currentDate) ? (
+                    {booking.isAvailable === true ? (
                       <MdDelete
                         className='text-2xl text-red-500 cursor-pointer'
-                        // onClick={() => handleDelete(car?._id)}
+                        onClick={() => handleDelete(booking?._id)}
                       />
                     ) : (
-                      <div></div>
+                      <div>
+                        {dayDifference(currentDate, booking.endDate)} Days Left
+                      </div>
                     )}
                   </TableCell>
                 </TableRow>

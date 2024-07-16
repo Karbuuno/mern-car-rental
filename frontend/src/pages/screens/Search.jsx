@@ -5,6 +5,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 // import { useMutation, useQueryClient, useQuery } from "react-query";
 import Location from "./Location";
 import { UseContext } from "@/components/context/AuthContext";
+import dayjs from "dayjs";
 
 function Search() {
   const [searchInput, setSearchInput] = useState("");
@@ -16,7 +17,8 @@ function Search() {
   const { search, setSearch } = UseContext();
   //   const QueryClient = useQueryClient();
   const navigate = useNavigate();
-
+  const today = dayjs();
+  const currentDate = today.format("YYYY-MM-DD");
   const submitHandler = async e => {
     e.preventDefault();
 
@@ -28,6 +30,7 @@ function Search() {
     if (searchInput && startDate && endDate) {
       navigate(`/cars/search/${searchInput}?from=${startDate}&to=${endDate}`);
     }
+
     // console.log(
     //   "totalDays",
     //   totalDays,
@@ -51,15 +54,16 @@ function Search() {
               // name='startDate'
               value={searchInput}
               onChange={e => setSearchInput(e.target.value)}
+
               // onChange={e => setEmail(e.target.value)}
             />
             <input
               className=' border-gray-200 py-2 px-6 bg-zinc-100/40 rounded-lg'
               type='date'
-              placeholder='Enter email'
               // name='startDate'
               value={startDate}
               onChange={e => setStartDate(e.target.value)}
+              min={currentDate}
               // onChange={e => setEmail(e.target.value)}
             />
             <input
@@ -68,7 +72,10 @@ function Search() {
               placeholder='Enter password'
               // name='endDate'
               value={endDate}
-              onChange={e => setEndDate(e.target.value)}
+              onChange={e => {
+                startDate && setEndDate(e.target.value);
+              }}
+              min={currentDate}
               // onChange={e => setPassword(e.target.value)}
             />
 

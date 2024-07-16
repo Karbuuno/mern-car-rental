@@ -33,7 +33,7 @@ function MyBooking() {
           <h3>{<h3>Data not found</h3>}</h3>
         ) : (
           <Table>
-            <TableCaption>A list of your recent invoices.</TableCaption>
+            <TableCaption>A list of your recent Booking.</TableCaption>
             <TableHeader>
               <TableRow>
                 <TableHead>Reg Number</TableHead>
@@ -62,7 +62,7 @@ function MyBooking() {
                     {booking.totalPrice}
                   </TableCell>
                   <TableCell className='font-medium'>
-                    {!isPassedEndDate(booking.endDate, currentDate) ? (
+                    {booking.isAvailable === true ? (
                       <MdDelete
                         className='text-2xl text-red-500 cursor-pointer'
                         // onClick={() => handleDelete(car?._id)}

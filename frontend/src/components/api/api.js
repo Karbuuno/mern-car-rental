@@ -114,3 +114,11 @@ export const allBookings = async () => {
   const { data } = await axios.get("/api/bookings/allBookings");
   return data;
 };
+export const carAvailable = async id => {
+  const { data } = await axios.put(`/api/cars/available/${id}`, {
+    headers: {
+      "content-type": "application/json",
+    },
+  });
+  return data;
+};

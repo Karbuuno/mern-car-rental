@@ -36,7 +36,7 @@ function CarList() {
                   <TableHead>Make</TableHead>
                   <TableHead>Model</TableHead>
                   <TableHead>Reg Number</TableHead>
-                  <TableHead>Image Link</TableHead>
+
                   <TableHead>Action</TableHead>
                 </TableRow>
               </TableHeader>

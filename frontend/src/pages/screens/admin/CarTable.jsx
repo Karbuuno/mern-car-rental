@@ -4,7 +4,7 @@ import { MdEdit, MdDelete } from "react-icons/md";
 import { TableCell } from "@/components/ui/table";
 
 import { useMutation, useQueryClient } from "react-query";
-import { deleteCar } from "@/components/api/api";
+import { carAvailable, deleteCar } from "@/components/api/api";
 import DialogForm from "@/components/DialogForm";
 
 function CarTable({ car }) {
@@ -19,6 +19,17 @@ function CarTable({ car }) {
       QueryClient.invalidateQueries({ queryKey: ["cars"] });
     },
   });
+  const carAvailableMutation = useMutation({
+    mutationFn: carAvailable,
+    onSuccess: data => {
+      QueryClient.invalidateQueries({ queryKey: ["bookings"] });
+      console.log(data);
+    },
+  });
+
+  const handleAvailable = async id => {
+    carAvailableMutation.mutate(id);
+  };
 
   const handleDelete = async id => {
     deleteCareMutation.mutate(id);
@@ -30,15 +41,22 @@ function CarTable({ car }) {
 
       <TableCell className='font-medium'>{car?.model}</TableCell>
       <TableCell className='font-medium'>{car?.regNumber}</TableCell>
-      <TableCell className='font-medium'>Imagelinke</TableCell>
+      <TableCell>
+        {car.isAvailable === false ? <div>Booked</div> : <div>Available</div>}
+      </TableCell>
       <TableCell>
         <DialogForm carToEdit={car} buttonTitle='Update Car' />
       </TableCell>
+
       <TableCell>
-        <MdDelete
-          className='text-2xl text-red-500 cursor-pointer'
-          onClick={() => handleDelete(car?._id)}
-        />
+        {car.isAvailable === true ? (
+          <MdDelete
+            className='text-2xl text-red-500 cursor-pointer'
+            onClick={() => handleDelete(car?._id)}
+          />
+        ) : (
+          <div>Booking Valid</div>
+        )}
       </TableCell>
     </>
   );

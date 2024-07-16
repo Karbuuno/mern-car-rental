@@ -1,6 +1,7 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import Bookings from "../models/BookingModel.js";
 import Car from "../models/CarModel.js";
+import Booking from "../models/BookingModel.js";
 
 const getMyBooking = asyncHandler(async (req, res) => {
   const myBookings = await Bookings.find({ user: req.user._id }).sort(
@@ -15,16 +16,31 @@ const allBooking = asyncHandler(async (req, res) => {
 
 const availableCar = asyncHandler(async (req, res) => {
   try {
-    // let { isAvailable } = req.body;
-    let updatedFields = {
-      isAvailable: req.body.isAvailable,
-    };
-    const car = await Car.findByIdAndUpdate(req.params.id, updatedFields, {
-      new: true,
-    });
+    let { isAvailable } = req.body;
+    // let updatedFields = {
+    //   isAvailable: req.body.isAvailable,
+    // };
+
+    const booking = await Booking.findByIdAndUpdate(
+      req.params.id,
+      { isAvailable: true },
+      {
+        new: true,
+      }
+    );
+    if (!booking) return res.status(400).send("booking Not Found");
+    const updatedBooking = await booking.save();
+    const car = await Car.findByIdAndUpdate(
+      booking.car,
+      { isAvailable: true },
+      {
+        new: true,
+      }
+    );
     if (!car) return res.status(400).send("Car Not Found");
     const available = await car.save();
-    res.json(available);
+
+    res.json({ available });
   } catch (error) {
     console.log(error);
     res.status(404);
