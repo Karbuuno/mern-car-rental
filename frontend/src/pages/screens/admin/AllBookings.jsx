@@ -9,14 +9,20 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { MdDelete } from "react-icons/md";
-import { QueryClient, useMutation, useQuery } from "react-query";
-import { allBookings, carAvailable } from "@/components/api/api";
+import {
+  QueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "react-query";
+import { allBookings, carAvailable, deleteBooking } from "@/components/api/api";
 import dayjs from "dayjs";
 import { dayDifference } from "@/components/api/daysDiff";
 
 function AllBookings() {
   // fetch all bookings
   const { data, error, isLoading } = useQuery("bookings", allBookings);
+  const QueryClient = useQueryClient();
   //getting current data
   const today = dayjs();
   const currentDate = today.format("YYYY-MM-DD");
@@ -31,6 +37,20 @@ function AllBookings() {
       console.log(data);
     },
   });
+  //delete booking
+
+  const deleteBookingMutation = useMutation({
+    mutationFn: deleteBooking,
+    onSuccess: data => {
+      console.log(data);
+      QueryClient.invalidateQueries({ queryKey: ["cars"] });
+    },
+  });
+
+  //handle handleDelete
+  const handleDelete = async id => {
+    deleteBookingMutation.mutate(id);
+  };
   // handle available
   const handleAvailable = async id => {
     carAvailableMutation.mutate(id);
@@ -38,7 +58,7 @@ function AllBookings() {
 
   return (
     <>
-      <div className='w-[900px] mx-auto mt-12 '>
+      <div className='w-[1000px] mx-auto mt-12 '>
         {isLoading ? (
           <h3>...loading</h3>
         ) : error ? (
@@ -74,27 +94,35 @@ function AllBookings() {
                     <span className='font-bold'>£</span>
                     {booking.totalPrice}
                   </TableCell>
-                  <TableCell>
-                    {booking.isAvailable === false && (
+                  <TableCell className='font-medium'>
+                    {booking.isAvailable === false ? (
                       <button
                         onClick={() =>
                           handleAvailable(booking?._id, {
                             isAvailable: booking.isAvailable,
                           })
                         }
+                        className='p-3 w-[150px] rounded-md text-white text-center text-lg bg-gray-500 shadow-lg shadow-gray-500/50'
                       >
-                        Booked
+                        Mark Available
                       </button>
+                    ) : (
+                      <div className=' p-2 w-[150px] rounded-md text-white text-center text-xl bg-green-500 shadow-lg shadow-green-500/50'>
+                        Available
+                      </div>
                     )}
                   </TableCell>
+
                   <TableCell className='font-medium'>
                     {booking.isAvailable === true ? (
-                      <MdDelete
-                        className='text-2xl text-red-500 cursor-pointer'
-                        onClick={() => handleDelete(booking?._id)}
-                      />
+                      <div className=' flex place-content-center p-2 w-[100px] text-2xl rounded-md cursor-pointer  text-white place-items-center  bg-red-300 shadow-lg shadow-gray-100/50'>
+                        <MdDelete
+                          className=' item-center '
+                          onClick={() => handleDelete(booking?._id)}
+                        />
+                      </div>
                     ) : (
-                      <div>
+                      <div className='p-2 w-[150px] rounded-md text-white text-center text-xl bg-blue-500 shadow-lg shadow-blue-200/50'>
                         {dayDifference(currentDate, booking.endDate)} Days Left
                       </div>
                     )}

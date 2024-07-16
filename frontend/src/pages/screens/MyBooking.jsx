@@ -9,19 +9,30 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { MdDelete } from "react-icons/md";
-import { useQuery } from "react-query";
-import { userBookings } from "@/components/api/api";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { deleteBooking, userBookings } from "@/components/api/api";
 import { dayDifference } from "@/components/api/daysDiff";
 import dayjs from "dayjs";
 
 function MyBooking() {
   const { data, error, isLoading } = useQuery("bookings", userBookings);
-
+  const QueryClient = useQueryClient();
   const today = dayjs();
   const currentDate = today.format("YYYY-MM-DD");
 
   const isPassedEndDate = (endDate, currentDate) => {
     return endDate > currentDate;
+  };
+  const deleteBookingMutation = useMutation({
+    mutationFn: deleteBooking,
+    onSuccess: data => {
+      QueryClient.invalidateQueries({ queryKey: ["cars"] });
+    },
+  });
+
+  //handle handleDelete
+  const handleDelete = async id => {
+    deleteBookingMutation.mutate(id);
   };
 
   return (
@@ -63,10 +74,12 @@ function MyBooking() {
                   </TableCell>
                   <TableCell className='font-medium'>
                     {booking.isAvailable === true ? (
-                      <MdDelete
-                        className='text-2xl text-red-500 cursor-pointer'
-                        // onClick={() => handleDelete(car?._id)}
-                      />
+                      <div className=' flex place-content-center p-2 w-[100px] text-2xl rounded-md cursor-pointer  text-white place-items-center  bg-red-300 shadow-lg shadow-gray-100/50'>
+                        <MdDelete
+                          className=' item-center '
+                          onClick={() => handleDelete(booking?._id)}
+                        />
+                      </div>
                     ) : (
                       <div>
                         {dayDifference(currentDate, booking.endDate)} Days Left

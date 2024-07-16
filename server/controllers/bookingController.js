@@ -48,4 +48,18 @@ const availableCar = asyncHandler(async (req, res) => {
   }
 });
 
-export { getMyBooking, allBooking, availableCar };
+//delete booking
+
+const deleteBooking = asyncHandler(async (req, res) => {
+  const booking = await Booking.findById(req.params.id);
+
+  if (booking) {
+    await Booking.deleteOne({ _id: booking._id });
+    res.json({ message: "Booking removed" });
+  } else {
+    res.status(404);
+    throw new Error("Booking not found");
+  }
+});
+
+export { getMyBooking, allBooking, deleteBooking, availableCar };
