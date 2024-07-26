@@ -5,9 +5,10 @@ import Cars from "./CarsScreen";
 function HomePage() {
   return (
     <>
-      <div className=''>
-        {/* <Header /> */}
-        <HeroPage />
+      {/* <Header /> */}
+      <HeroPage />
+      <div className='mt-24 bg-gray-200 '>
+        <div className='text-2xl px-4'>Car List</div>
         <Cars />
       </div>
     </>

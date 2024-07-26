@@ -22,10 +22,6 @@ function Search() {
   const submitHandler = async e => {
     e.preventDefault();
 
-    console.log("handle");
-    // dayDifference(startDate, endDate);
-    // setBooking(carData);
-    // mutate(carData);
     setQuery(searchInput);
     if (searchInput && startDate && endDate) {
       navigate(`/cars/search/${searchInput}?from=${startDate}&to=${endDate}`);
@@ -44,21 +40,21 @@ function Search() {
 
   return (
     <>
-      <div className='md:max-w-screen-lg w-full mx-auto flex justify-center items-center   h-[100px] mt-8 bg-gray-100  rounded-lg '>
-        <form className='flex flex-col gap-3' onSubmit={submitHandler}>
-          <div className='grid grid-cols-4 justify-center items-center '>
-            <input
-              className=' border-gray-200 py-2 px-6 bg-zinc-100/40 rounded-lg'
-              type='text'
-              placeholder='Enter the city name'
-              // name='startDate'
-              value={searchInput}
-              onChange={e => setSearchInput(e.target.value)}
+      <div className='md:max-w-screen-lg w-full mx-auto flex flex-col justify-center items-center   h-[300px]  bg-blue-300   rounded-lg  '>
+        <form onSubmit={submitHandler} className='z-[10] '>
+          <input
+            className='w-[250px] md:w-[450px]  lg:w-[600px] border-gray-200 p-4  bg-white outline-none rounded-lg'
+            type='text'
+            placeholder='Enter the city name'
+            // name='startDate'
+            value={searchInput}
+            onChange={e => setSearchInput(e.target.value)}
 
-              // onChange={e => setEmail(e.target.value)}
-            />
+            // onChange={e => setEmail(e.target.value)}
+          />
+          <div className='flex flex-col w gap-1 md:flex-col lg:flex-row  mt-3 justify-center items-center '>
             <input
-              className=' border-gray-200 py-2 px-6 bg-zinc-100/40 rounded-lg'
+              className=' w-[250px] md:w-[450px] lg:w-[300px] border-gray-200 p-4  bg-white outline-none rounded-lg'
               type='date'
               // name='startDate'
               value={startDate}
@@ -67,7 +63,7 @@ function Search() {
               // onChange={e => setEmail(e.target.value)}
             />
             <input
-              className=' border-gray-200 py-2 px-6 bg-zinc-100/40 rounded-lg'
+              className='w-[250px] md:w-[450px] lg:w-[300px]   border-gray-200 p-4  bg-white outline-none rounded-lg'
               type='date'
               placeholder='Enter password'
               // name='endDate'
@@ -78,15 +74,15 @@ function Search() {
               min={currentDate}
               // onChange={e => setPassword(e.target.value)}
             />
+          </div>
 
-            <div className='mx-4'>
-              <button
-                type='submit'
-                className='bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-full'
-              >
-                Search
-              </button>
-            </div>
+          <div className='flex justify-end mt-6'>
+            <button
+              type='submit'
+              className='bg-black  text-white font-bold py-2 px-4 rounded-md'
+            >
+              Search
+            </button>
           </div>
         </form>
       </div>

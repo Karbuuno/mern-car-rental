@@ -43,7 +43,7 @@ function AllBookings() {
     mutationFn: deleteBooking,
     onSuccess: data => {
       console.log(data);
-      QueryClient.invalidateQueries({ queryKey: ["cars"] });
+      QueryClient.invalidateQueries({ queryKey: ["bookings"] });
     },
   });
 
@@ -102,7 +102,7 @@ function AllBookings() {
                             isAvailable: booking.isAvailable,
                           })
                         }
-                        className='p-3 w-[150px] rounded-md text-white text-center text-lg bg-gray-500 shadow-lg shadow-gray-500/50'
+                        className='p-2 w-[150px] rounded-md text-white text-center text-lg bg-gray-500 shadow-lg shadow-gray-500/50'
                       >
                         Mark Available
                       </button>

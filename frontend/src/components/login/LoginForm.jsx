@@ -16,6 +16,7 @@ function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [redirectValue, setRedirectValue] = useState("");
+  const [errorMassage, setErrorMassage] = useState("");
   const navigate = useNavigate();
   const QueryClient = useQueryClient();
   //Redirecting
@@ -54,7 +55,6 @@ function LoginForm() {
     onSuccess: data => {
       QueryClient.invalidateQueries({ queryKey: ["login"] });
       setUser(data);
-      console.log(data);
     },
     isError: err => {
       console.log(err);
@@ -63,15 +63,19 @@ function LoginForm() {
 
   const submitHandler = async e => {
     e.preventDefault();
-    navigate(redirectValue);
-    mutate({ email, password });
+    if (email && password) {
+      mutate({ email, password });
+      navigate(redirectValue);
+    } else {
+      setErrorMassage("Email or password is not correct");
+    }
   };
 
   return (
     <div className='flex justify-center items-center h-screen'>
       <div className='shadow-lg p-5 rounded-lg border-t-4 border-green-400'>
         <h1 className='text-xl font-bold my-4'>Enter your details</h1>
-
+        <div>{errorMassage}</div>
         <form className='flex flex-col gap-3' onSubmit={submitHandler}>
           <input
             className='w-[400px] border-gray-200 py-2 px-6 bg-zinc-100/40 rounded-lg'
