@@ -1,8 +1,6 @@
 import React from "react";
 import { GiCarDoor, GiGearStickPattern } from "react-icons/gi";
 import { useQuery } from "react-query";
-
-// import { UseContext } from "@/components/context/AuthContext";
 import {
   createSearchParams,
   useLocation,
@@ -13,8 +11,10 @@ import { SearchCarsData } from "@/components/api/api";
 import { dayDifference } from "@/components/api/daysDiff";
 import { FaSuitcase, FaUser } from "react-icons/fa";
 import { IoMdLocate, IoMdSpeedometer } from "react-icons/io";
+import { UseContext } from "@/components/context/AuthContext"; // adjust import path if needed
 
 function Location() {
+  const { user } = UseContext(); // get logged-in user from context
   const { location } = useParams();
   const navigate = useNavigate();
   const { search } = useLocation();
@@ -25,277 +25,140 @@ function Location() {
 
   const totalDays = dayDifference(from, to);
 
-  // console.log(from, to, totalDays);
   const { data, error, isLoading } = useQuery({
     queryKey: ["search", location],
     queryFn: () => SearchCarsData(location),
   });
 
-  console.log("data", data);
-
-  // redirect=/car/${
-  //   car._id
-  // }&totalDays=${encodeURIComponent(
-  //   totalDays
-  // )}&from=${encodeURIComponent(
-  //   from
-  // )}&to=${encodeURIComponent(to)}
-
-  const params = { totalDays: totalDays };
-
-  // navigate({
-  //   pathname: "/posts",
-  //   search: `?${createSearchParams(params)}`,
-  // });
+  if (isLoading) return <h3>...loading</h3>;
+  if (error) return <h3>Data not found</h3>;
+  if (!data || !data.searchedCar || data.searchedCar.length === 0)
+    return <h3>Car Not Found</h3>;
 
   return (
-    <>
-      {/* <div className='h-screen w-full mx-auto '>
-        
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center place-items-center px-24 mt-16 gap-x-8    '>
-          {isLoading ? (
-            <h3>...loading</h3>
-          ) : error ? (
-            <h3>{error.data.massage}</h3>
-          ) : (
-            <>
-              {data?.length === 0 && (
-                <h1 className='text-2xl font-bold ml-20'>Car Not Found</h1>
-              )}
-              {data.searchedCar.map(car => (
-                <div key={car._id}>
-                  <div className=' flex flex-col rounded  bg-gray-200 shadow-md mt-6 mx-auto  text-center  '>
-                    <div className='flex flex-row space-x-6 space-10  mix-blend-multiply'>
-                      <div className='flex flex-col'>
-                        <div className='mx-10 my-5'>
-                          <img src={car.image} alt={car.make} className='' />
-                        </div>
-                        <div className='flex justify-around'>
-                          <div>
-                            <div>Suv</div>
-                            <h1 className='font-bold'>Kia Sportage</h1>
-                            <div>
-                              Price for{" "}
-                              <span className='ml-4 font-bold'>
-                                {totalDays} days
-                              </span>
-                              {totalDays ? (
-                                <span className='ml-4 font-bold'>
-                                  ${Math.floor(car?.price * totalDays)}
-                                </span>
-                              ) : null}
-                            </div>
-                          </div>
-                          <div>⭐⭐⭐⭐⭐</div>
-                        </div>
-                      </div>
-                      <div className='flex flex-col space-x-6 mt-10'>
-                        <div className=' flex  text-center text-gray-500'>
-                          <GiGearStickPattern className='w-full text-[22px] mb-2' />
+    <div className='flex justify-between flex-wrap gap-x-4 gap-y-12 mt-20 px-3 md:px-5 lg:px-8 xl:px-16'>
+      {data.searchedCar.map(car => (
+        <div
+          className='flex flex-col flex-grow gap-2 shadow-2xl bg-white rounded-md ms:w-full md:w-full lg:w-[45%]'
+          key={car._id}
+        >
+          <div className='flex justify-between px-4 w-full h-80'>
+            {/* Image */}
+            <div className='flex items-center px-3'>
+              <img src={car.image} alt={car.name} className='max-h-full' />
+            </div>
 
-                          <h3>{car.make}</h3>
-                        </div>
-                        <div className='flex space-x-6 text-center text-gray-500'>
-                          <GiGearStickPattern className='w-full text-[22px] mb-2' />
+            {/* Details */}
+            <div className='mt-8 px-4 flex flex-col justify-between'>
+              <h2 className='font-bold uppercase'>
+                {car.name} {car.model}
+              </h2>
 
-                          <h3>{car.make}</h3>
-                        </div>
-                        <div className='flex space-x-6 text-center text-gray-500'>
-                          <GiGearStickPattern className='w-full text-[22px] mb-2' />
-
-                          <h3>{car.make}</h3>
-                        </div>
-                        <div className='flex space-x-6 text-center text-gray-500'>
-                          <GiGearStickPattern className='w-full text-[22px] mb-2' />
-
-                          <h3>{car.make}</h3>
-                        </div>
-                        <div className='flex space-x-6 text-center text-gray-500'>
-                          <GiGearStickPattern className='w-full text-[22px] mb-2' />
-
-                          <h3>{car.make}</h3>
-                        </div>
-                      </div>
-                    </div>
-                    <div className=' mx-2 my-2'>
-                      <button
-                        disabled={car.isAvailable == false}
-                        // onClick={() =>
-                        //   navigate(
-                        //     `/login?redirect=/car/${car._id}&totalDays=${totalDays}`
-                        //   )
-                        // }
-                        onClick={() => {
-                          navigate({
-                            pathname: `/login`,
-                            search: `?${createSearchParams({
-                              redirect: `/car/${car._id}`,
-                              totalDays: totalDays,
-                              from: from,
-                              to: to,
-                            })}`,
-                          });
-                        }}
-                        // onClick={() =>
-                        //   navigate(
-                        //     `/login?redirect=/car/${
-                        //       car._id
-                        //     }&totalDays=${encodeURIComponent(
-                        //       totalDays
-                        //     )}&from=${encodeURIComponent(
-                        //       from
-                        //     )}&to=${encodeURIComponent(to)}`
-                        //   )
-                        // }
-                      >
-                        {car.isAvailable == false ? (
-                          <div className='bg-gray-400 p-2 rounded text-white w-[300px]'>
-                            <span className='text-xl'>Car is booked until</span>
-                            &nbsp;
-                            <span className='text-black font-bold '>{to}</span>
-                          </div>
-                        ) : (
-                          <div className=' group-hover: bg-gradient-to-r from-blue-400 to-blue-600 p-2 rounded text-white w-[300px] '>
-                            View More Details
-                          </div>
-                        )}
-                      </button>
-                    </div>
+              <div className='flex justify-between gap-8 flex-wrap mt-8'>
+                <div className='flex flex-col gap-4'>
+                  <div className='flex items-center gap-2 text-gray-500'>
+                    <FaUser className='mt-1' />
+                    <span>Seats: {car.seats}</span>
+                  </div>
+                  <div className='flex items-center gap-2 text-gray-500'>
+                    <GiCarDoor className='mt-1' />
+                    <span>Doors: {car.doors}</span>
+                  </div>
+                  <div className='flex items-center gap-2 text-gray-500'>
+                    <IoMdSpeedometer className='mt-1' />
+                    <span>Limited Mileage</span>
                   </div>
                 </div>
-              ))}
-            </>
-          )}
-        </div>
-      </div> */}
 
-      <div className='flex  justify-between  flex-wrap gap-x-4 gap-y-12 mt-10 px-3 md:px-5 lg:px-8 xl:px-16'>
-        {isLoading ? (
-          <h3>...loading</h3>
-        ) : error ? (
-          <h3>Data not found</h3>
-        ) : (
-          <>
-            {data.searchedCar.map(car => (
-              <div
-                className='flex flex-col flex-grow gap-2 shadow-2xl bg-white rounded-md ms:w-full  md:w-full lg:w-[45%]'
-                key={car?._id}
-              >
-                <div className='flex justify-between px-4 w-full h-80 '>
-                  {/* {image} */}
-                  <div className='flex items-center px-3'>
-                    <img src={car?.image} alt='Kia Sportage' />
+                <div className='flex flex-col gap-4'>
+                  <div className='flex items-center gap-2 text-gray-500'>
+                    <FaSuitcase className='mt-1' />
+                    <span>Baggage: 4</span>
                   </div>
-                  {/* {details} */}
-
-                  <div className='mt-8 px-4'>
-                    <h2 className='font-bold uppercase'>
-                      {car?.name} {""}
-                      {car.model}
-                    </h2>
-                    <div className='flex justify-between gap-8 mt-8 flex-row '>
-                      <div className='flex flex-row gap-2 '>
-                        <div>
-                          <div className='flex flex-row gap-2 '>
-                            <FaUser className='mt-3' />
-                            <div className='mt-2'>
-                              Seats:<span className='p-2'>{car?.seats}</span>
-                            </div>
-                          </div>
-                          <div className='flex flex-row gap-2'>
-                            <GiCarDoor className='mt-3' />
-                            <div className='mt-2'>
-                              Doors:<span className='p-2'>{car?.doors}</span>
-                            </div>
-                          </div>
-                          <div></div>
-                          <div className='flex flex-row gap-2'>
-                            <IoMdSpeedometer className='mt-3' />
-                            <div className='mt-2'>Limited Mileage</div>
-                          </div>
-                        </div>
-                        <div>
-                          <div className='flex flex-row gap-2'>
-                            <FaSuitcase className='mt-3' />
-                            <div className='mt-2'>
-                              Baggage: <span className='px-2'>4</span>
-                            </div>
-                          </div>
-                          <div className='flex flex-row gap-2'>
-                            <GiGearStickPattern className='mt-3' />
-                            <div className='mt-2'>{car?.gear}</div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className='flex flex-row gap-2 mt-16'>
-                      <IoMdLocate className='mt-1' />
-                      <div className='text-blue-400'>
-                        {car?.location} Airport
-                      </div>
-                    </div>
-                  </div>
-                  {/* {price} */}
-                  <div className='flex flex-col justify-end'>
-                    <p className='text-gray-500'>Price for {totalDays} days:</p>
-                    <div className='flex justify-around'>
-                      <h2 className='font-bold uppercase'>usd$</h2>
-                      <div className=''>
-                        {totalDays ? (
-                          <span className='ml-4 font-bold'>
-                            ${Math.floor(car?.price * totalDays)}
-                          </span>
-                        ) : null}
-                      </div>
-                    </div>
-                    <p className='text-green-500'>Fee Cancellation</p>
-                  </div>
-                </div>
-                <div
-                  className='w-ful  border-2 h-20  border-t-gray-300 rounded-b-md
-                  '
-                >
-                  <div className='flex justify-between p-3'>
-                    <div className='flex flex-row p-3'>
-                      <p className='text-gray-500 text-lg'>4.7 ⭐</p>
-                      <p className='text-gray-500 text-lg'>24 Reviews</p>
-                    </div>
-                    <div className=' mx-2 my-2'>
-                      <button
-                        disabled={car.isAvailable == false}
-                        onClick={() => {
-                          navigate({
-                            pathname: `/login`,
-                            search: `?${createSearchParams({
-                              redirect: `/car/${car._id}`,
-                              totalDays: totalDays,
-                              from: from,
-                              to: to,
-                            })}`,
-                          });
-                        }}
-                      >
-                        {car.isAvailable == false ? (
-                          <div className='bg-gray-400 p-2 rounded text-white w-[300px]'>
-                            <span className='text-xl'>Car is booked until</span>
-                            &nbsp;
-                            <span className='text-black font-bold '>{to}</span>
-                          </div>
-                        ) : (
-                          <div className=' group-hover: bg-gradient-to-r from-blue-400 to-blue-600 p-2 rounded text-white w-[300px] '>
-                            View More Details
-                          </div>
-                        )}
-                      </button>
-                    </div>
+                  <div className='flex items-center gap-2 text-gray-500'>
+                    <GiGearStickPattern className='mt-1' />
+                    <span>{car.gear}</span>
                   </div>
                 </div>
               </div>
-            ))}
-          </>
-        )}
-      </div>
-    </>
+
+              <div className='flex items-center gap-2 mt-16 text-blue-400'>
+                <IoMdLocate className='mt-1' />
+                <span>{car.location} Airport</span>
+              </div>
+            </div>
+
+            {/* Price */}
+            <div className='flex flex-col justify-end'>
+              <p className='text-gray-500'>Price for {totalDays} days:</p>
+              <div className='flex justify-around'>
+                <h2 className='font-bold uppercase'>USD$</h2>
+                <div>
+                  {totalDays ? (
+                    <span className='ml-4 font-bold'>
+                      ${Math.floor(car.price * totalDays)}
+                    </span>
+                  ) : null}
+                </div>
+              </div>
+              <p className='text-green-500'>Fee Cancellation</p>
+            </div>
+          </div>
+
+          {/* Footer with Reviews and Button */}
+          <div className='w-full border-2 h-20 border-t-gray-300 rounded-b-md'>
+            <div className='flex justify-between p-3'>
+              <div className='flex flex-row gap-4 p-3 text-gray-500 text-lg'>
+                <p>4.7 ⭐</p>
+                <p>24 Reviews</p>
+              </div>
+              <div className='mx-2 my-2'>
+                <button
+                  disabled={car.isAvailable === false}
+                  onClick={() => {
+                    if (user) {
+                      // User logged in — navigate directly to car details page with query params
+                      navigate(
+                        `/car/${car._id}?${createSearchParams({
+                          totalDays: totalDays.toString(),
+                          from: from || "",
+                          to: to || "",
+                        })}`
+                      );
+                    } else {
+                      // User NOT logged in — redirect to login with redirect back to car details
+                      navigate({
+                        pathname: `/login`,
+                        search: `?${createSearchParams({
+                          redirect: `/car/${car._id}`,
+                          totalDays,
+                          from,
+                          to,
+                        })}`,
+                      });
+                    }
+                  }}
+                  className={`w-[300px] p-2 rounded text-white ${
+                    car.isAvailable === false
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-gradient-to-r from-blue-400 to-blue-600 hover:brightness-110"
+                  }`}
+                >
+                  {car.isAvailable === false ? (
+                    <>
+                      <span className='text-xl'>Car is booked until&nbsp;</span>
+                      <span className='text-black font-bold'>{to}</span>
+                    </>
+                  ) : (
+                    "View More Details"
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
   );
 }
 

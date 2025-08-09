@@ -1,81 +1,107 @@
 import React, { useEffect, useState } from "react";
-// import { FaRegUser } from "react-icons/fa";
-
-import { logout } from "@/components/api/api";
-
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { useMutation, useQueryClient } from "react-query";
 import { UseContext } from "@/components/context/AuthContext";
 import DropDownMenu from "@/components/DropDownMenu";
 
 function Header() {
-  const [nav, setNav] = useState(false);
-  const QueryClient = useQueryClient();
-  const navigate = useNavigate();
-  const { user, setUser } = UseContext();
-
+  const [navOpen, setNavOpen] = useState(false);
+  const { user } = UseContext();
   const location = useLocation();
 
   useEffect(() => {
-    setNav(false);
+    setNavOpen(false); // Close menu on route change
   }, [location]);
 
   return (
-    <>
-      <div className=' flex justify-between items-center w-full h-20 px-4 text-white bg-black'>
-        <div>
-          <h1 className='text-5xl  ml-2'>CAR RENTAL</h1>
-        </div>
+    <header className='fixed top-0 left-0 w-full bg-black text-white shadow-lg z-50'>
+      <div className='max-w-7xl mx-auto px-6 flex justify-between items-center h-16'>
+        {/* Logo */}
+        <Link to='/' className='flex items-center gap-2'>
+          <h1 className='text-xl md:text-2xl font-bold tracking-wide'>
+            CAR RENTAL
+          </h1>
+        </Link>
 
-        <div className='hidden md:flex lg:flex'>
-          <div className='px-4  capitalize font-medium text-gray-500 curser-pointer'>
-            <Link to='/'>HOME</Link>
-          </div>
-          <div className='px-4 capitalize font-medium text-gray-500 hover:cursor-pointer'>
-            <Link to='/cars'>CARS</Link>
-          </div>
-          <div className='px-4 cursor-pointer capitalize font-medium text-gray-500 hover:cursor-pointer'>
-            <Link to=''>ABOUT</Link>
-          </div>
-          <div className='px-4 cursor-pointer capitalize font-medium text-gray-500 '>
-            {user ? (
-              <Link to='/login'>
-                <DropDownMenu />
-              </Link>
-            ) : (
-              <Link to='/login'>Login</Link>
-            )}
-          </div>
-        </div>
+        {/* Desktop Nav */}
+        <nav className='hidden md:flex gap-6 text-gray-300 font-medium'>
+          <Link to='/' className='hover:text-yellow-400 transition'>
+            Home
+          </Link>
+          <Link to='/cars' className='hover:text-yellow-400 transition'>
+            Cars
+          </Link>
+          <Link to='/about' className='hover:text-yellow-400 transition'>
+            About
+          </Link>
+          {user ? (
+            <DropDownMenu />
+          ) : (
+            <Link to='/login' className='hover:text-yellow-400 transition'>
+              Login
+            </Link>
+          )}
+        </nav>
 
+        {/* Mobile Toggle */}
         <div
-          onClick={() => setNav(!nav)}
-          className='cursor-pointer pr-4 z-10 text-gray-500 md:hidden'
+          className='md:hidden text-gray-300 cursor-pointer'
+          onClick={() => setNavOpen(!navOpen)}
         >
-          {nav ? <FaTimes size={30} /> : <FaBars size={30} />}
+          {navOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
         </div>
-
-        {nav && (
-          <div className='z-[5] flex flex-col justify-center items-center absolute top-0 left-0 w-full h-screen bg-black  md:hidden'>
-            <ul>
-              <li className='px-4 cursor-pointer capitalize py-6 text-4xl text-white'>
-                <Link to='/'>HOME</Link>
-              </li>
-              <li className='px-4 cursor-pointer capitalize py-6 text-4xl text-white'>
-                <Link to='/cars'>CARS</Link>
-              </li>
-              <li className='px-4 cursor-pointer capitalize py-6 text-4xl text-white'>
-                <Link>ABOUT</Link>
-              </li>
-              <li className='px-4 cursor-pointer capitalize py-6 text-4xl text-white '>
-                <Link to='/login'>LOGIN</Link>
-              </li>
-            </ul>
-          </div>
-        )}
       </div>
-    </>
+
+      {/* Overlay */}
+      {navOpen && (
+        <div
+          className='fixed inset-0 bg-black/50 backdrop-blur-sm z-40'
+          onClick={() => setNavOpen(false)}
+        />
+      )}
+
+      {/* Mobile Drawer */}
+      <div
+        className={`fixed top-0 right-0 h-full w-64 bg-black/95 backdrop-blur-md shadow-lg transform transition-transform duration-300 ease-in-out z-50 ${
+          navOpen ? "translate-x-0" : "translate-x-full"
+        } md:hidden`}
+      >
+        <nav className='flex flex-col items-start p-6 gap-6 text-gray-300 text-lg'>
+          <Link
+            to='/'
+            className='hover:text-yellow-400'
+            onClick={() => setNavOpen(false)}
+          >
+            Home
+          </Link>
+          <Link
+            to='/cars'
+            className='hover:text-yellow-400'
+            onClick={() => setNavOpen(false)}
+          >
+            Cars
+          </Link>
+          <Link
+            to='/about'
+            className='hover:text-yellow-400'
+            onClick={() => setNavOpen(false)}
+          >
+            About
+          </Link>
+          {user ? (
+            <DropDownMenu />
+          ) : (
+            <Link
+              to='/login'
+              className='hover:text-yellow-400'
+              onClick={() => setNavOpen(false)}
+            >
+              Login
+            </Link>
+          )}
+        </nav>
+      </div>
+    </header>
   );
 }
 

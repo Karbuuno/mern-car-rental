@@ -13,24 +13,24 @@ import { UseContext } from "./context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "react-query";
 import { logout } from "./api/api";
-import AllBookings from "./../pages/screens/admin/AllBookings";
+
 function DropDownMenu() {
-  const QueryClient = useQueryClient();
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { user, setUser } = UseContext();
-  const { mutate, isError, onSuccess } = useMutation({
+
+  const { mutate } = useMutation({
     mutationFn: logout,
     onSuccess: data => {
-      QueryClient.invalidateQueries({ queryKey: ["logout"] });
+      queryClient.invalidateQueries({ queryKey: ["logout"] });
       setUser(data);
-      console.log(data);
     },
-    isError: err => {
-      console.log(err);
+    onError: err => {
+      console.error(err);
     },
   });
 
-  const logoutHandler = async e => {
+  const logoutHandler = e => {
     e.preventDefault();
     if (user) {
       localStorage.removeItem("user");
@@ -40,47 +40,55 @@ function DropDownMenu() {
   };
 
   return (
-    <>
-      <DropdownMenu>
-        <DropdownMenuTrigger>
-          <PiUserList className='h-7 w-7' />
-        </DropdownMenuTrigger>
+    <DropdownMenu>
+      <DropdownMenuTrigger className='focus:outline-none'>
+        <PiUserList className='h-7 w-7 cursor-pointer hover:text-yellow-400 transition' />
+      </DropdownMenuTrigger>
 
-        <DropdownMenuContent className=' m-7'>
-          <div className=' flex justify-between w-[250px]'>
-            <div className='flex flex-col'>
-              <DropdownMenuLabel>
-                <Link to='/profile'>{user?.name}</Link>
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <Link to='/profile'>Profile</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                {user && user.isAdmin && (
-                  <Link to='/cars/admin/all-bookings'>All Bookings</Link>
-                )}
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                {user && user.isAdmin ? (
-                  <Link to='/cars/admin/carlist'>Car List</Link>
-                ) : (
-                  <Link to='/my-booking'>My Booking</Link>
-                )}
-              </DropdownMenuItem>
-            </div>
-            <div>
-              <DropdownMenuItem>
-                <IoLogOutOutline
-                  className=' h-7 w-7 '
-                  onClick={logoutHandler}
-                />
-              </DropdownMenuItem>
-            </div>
-          </div>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </>
+      <DropdownMenuContent className='min-w-[220px] p-2'>
+        {/* User Info */}
+        <DropdownMenuLabel className='text-lg font-semibold'>
+          <Link to='/profile' className='hover:underline'>
+            {user?.name || "Profile"}
+          </Link>
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+
+        {/* Links */}
+        <DropdownMenuItem asChild>
+          <Link to='/profile' className='w-full block'>
+            Profile
+          </Link>
+        </DropdownMenuItem>
+
+        {user?.isAdmin && (
+          <DropdownMenuItem asChild>
+            <Link to='/cars/admin/all-bookings' className='w-full block'>
+              All Bookings
+            </Link>
+          </DropdownMenuItem>
+        )}
+
+        <DropdownMenuItem asChild>
+          <Link
+            to={user?.isAdmin ? "/cars/admin/carlist" : "/my-booking"}
+            className='w-full block'
+          >
+            {user?.isAdmin ? "Car List" : "My Booking"}
+          </Link>
+        </DropdownMenuItem>
+
+        {/* Logout */}
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          onClick={logoutHandler}
+          className='text-red-500 font-medium cursor-pointer'
+        >
+          <IoLogOutOutline className='mr-2 h-5 w-5' />
+          Logout
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 

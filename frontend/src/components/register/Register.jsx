@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "react-query";
 import { register } from "../api/api.js";
@@ -8,29 +7,40 @@ function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const QueryClient = useQueryClient();
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { search } = useLocation();
   const sp = new URLSearchParams(search);
   const redirect = sp.get("redirect") || "/";
 
+  const from = sp.get("from");
+  const to = sp.get("to");
+  const totalDays = sp.get("totalDays");
+
+  // car id
+  const carId = sp.get("carId");
+
+  const finalRedirect =
+    from && to && totalDays
+      ? `${redirect}?carId=${carId}&from=${from}&to=${to}&totalDays=${totalDays}`
+      : redirect;
+
   const registerMutation = useMutation({
     mutationFn: register,
     onSuccess: data => {
-      QueryClient.invalidateQueries({ queryKey: ["register"] });
-      navigate("/");
-      console.log(data);
+      queryClient.invalidateQueries({ queryKey: ["register"] });
+      navigate(finalRedirect, { replace: true });
+    },
+    onError: err => {
+      console.error("Registration failed:", err);
     },
   });
-  // const { mutate, isLoading, isError, data } = useMutation(login, {
-  //   onSuccess: data => console.log(data),
-  // });
+
   const submitHandler = e => {
     e.preventDefault();
-    navigate(redirect);
-    // const formData = new FormData(e.currentTarget);
-    // const newUser = Object.fromEntries(formData);
-    registerMutation.mutate({ name, email, password });
+    if (name && email && password) {
+      registerMutation.mutate({ name, email, password });
+    }
   };
 
   return (
@@ -41,15 +51,13 @@ function Register() {
           <input
             className='w-[400px] border-gray-200 py-2 px-6 bg-zinc-100/40 rounded-lg'
             type='text'
-            name='name'
             value={name}
             onChange={e => setName(e.target.value)}
             placeholder='Enter your name'
           />
           <input
             className='w-[400px] border-gray-200 py-2 px-6 bg-zinc-100/40 rounded-lg'
-            type='text'
-            name='email'
+            type='email'
             value={email}
             onChange={e => setEmail(e.target.value)}
             placeholder='Enter your email'
@@ -57,7 +65,6 @@ function Register() {
           <input
             className='w-[400px] border-gray-200 py-2 px-6 bg-zinc-100/40 rounded-lg'
             type='password'
-            name='password'
             value={password}
             onChange={e => setPassword(e.target.value)}
             placeholder='Enter your password'
@@ -69,7 +76,8 @@ function Register() {
           >
             Register
           </button>
-          <Link to={redirect ? `/login?redirect=${redirect}` : "/login"}>
+
+          <Link to={"/login"}>
             Already registered? <span>Login</span>
           </Link>
         </form>
