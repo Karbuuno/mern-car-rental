@@ -1,10 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { FaFacebookF, FaTwitter, FaInstagram, FaCarSide } from "react-icons/fa";
 
 function Footer() {
   return (
     <footer className='bg-gray-900 text-gray-300 py-10 mt-16'>
-      <div className='max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8'>
+      <div className='max-w-7xl mx-auto px-6 flex flex-col md:grid md:grid-cols-4 gap-8'>
         {/* Logo & About */}
         <div>
           <div className='flex items-center mb-4'>
@@ -22,24 +23,24 @@ function Footer() {
           <h3 className='text-white font-semibold mb-4'>Quick Links</h3>
           <ul className='space-y-2'>
             <li>
-              <a href='/' className='hover:text-yellow-400'>
+              <Link to='/' className='hover:text-yellow-400'>
                 Home
-              </a>
+              </Link>
             </li>
             <li>
-              <a href='/cars' className='hover:text-yellow-400'>
+              <Link to='/cars' className='hover:text-yellow-400'>
                 Browse Cars
-              </a>
+              </Link>
             </li>
             <li>
-              <a href='/about' className='hover:text-yellow-400'>
+              <Link to='/about' className='hover:text-yellow-400'>
                 About Us
-              </a>
+              </Link>
             </li>
             <li>
-              <a href='/contact' className='hover:text-yellow-400'>
+              <Link to='/contact' className='hover:text-yellow-400'>
                 Contact
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -49,24 +50,24 @@ function Footer() {
           <h3 className='text-white font-semibold mb-4'>Support</h3>
           <ul className='space-y-2'>
             <li>
-              <a href='#' className='hover:text-yellow-400'>
+              <Link to='/faq' className='hover:text-yellow-400'>
                 FAQ
-              </a>
+              </Link>
             </li>
             <li>
-              <a href='#' className='hover:text-yellow-400'>
+              <Link to='/terms' className='hover:text-yellow-400'>
                 Terms & Conditions
-              </a>
+              </Link>
             </li>
             <li>
-              <a href='#' className='hover:text-yellow-400'>
+              <Link to='/privacy' className='hover:text-yellow-400'>
                 Privacy Policy
-              </a>
+              </Link>
             </li>
             <li>
-              <a href='#' className='hover:text-yellow-400'>
+              <Link to='/support' className='hover:text-yellow-400'>
                 Customer Support
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -75,7 +76,7 @@ function Footer() {
         <div>
           <h3 className='text-white font-semibold mb-4'>Contact Us</h3>
           <p className='text-gray-400 text-sm'>
-            📍 123 Birmingham street, Birmingham, Uk
+            📍 123 Birmingham Street, Birmingham, UK
           </p>
           <p className='text-gray-400 text-sm'>📞 +1 234 567 890</p>
           <p className='text-gray-400 text-sm'>✉️ support@carRental.com</p>

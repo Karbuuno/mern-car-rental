@@ -16,7 +16,7 @@ function HomeScreen() {
 
   return (
     <>
-      <div className='flex  justify-between  flex-wrap gap-x-4 gap-y-12 mt-10 px-3 md:px-5 lg:px-8 xl:px-16'>
+      <div className='mt-20 px-3 md:px-5 lg:px-8 xl:px-16 flex justify-between flex-wrap gap-x-4 gap-y-12'>
         {isLoading ? (
           <h3>...loading</h3>
         ) : error ? (

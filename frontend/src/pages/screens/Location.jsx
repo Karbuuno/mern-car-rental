@@ -32,8 +32,15 @@ function Location() {
 
   if (isLoading) return <h3>...loading</h3>;
   if (error) return <h3>Data not found</h3>;
-  if (!data || !data.searchedCar || data.searchedCar.length === 0)
-    return <h3>Car Not Found</h3>;
+  if (!data || !data.searchedCar || data.searchedCar.length === 0) {
+    return (
+      <div className='flex items-center justify-center h-[50vh]'>
+        <h3 className='text-2xl font-semibold text-gray-500'>
+          City "<span className='text-red-500'>{location}</span>" not found
+        </h3>
+      </div>
+    );
+  }
 
   return (
     <div className='flex justify-between flex-wrap gap-x-4 gap-y-12 mt-20 px-3 md:px-5 lg:px-8 xl:px-16'>
